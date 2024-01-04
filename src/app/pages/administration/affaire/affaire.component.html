@@ -1,0 +1,299 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)">  Affiares </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter une Affiare
+                </li>
+              </ol>
+            </nav> 
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0"> <b>Ajouter une Nouvelle Affiare</b></h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <form #ngFormulaire="ngForm" (ngSubmit)="submit(ngFormulaire)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="businessNameInput">
+                    Objet
+                  </label>
+                  <input
+                    name="objet"
+                    class="form-control"
+                    id="businessNameInput"
+                    placeholder="Objet de l'affaire"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['objet'].invalid && ngFormulaire.controls['objet'].touched">
+                    L'objet est requis.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="moInput">
+                    Mo
+                  </label>
+                  <input
+                    name="mo"
+                    class="form-control"
+                    id="moInput"
+                    placeholder="Mo de l'affaire"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['mo'].invalid && ngFormulaire.controls['mo'].touched">
+                    L'Mo est requise.
+                  </div>
+                </div>
+              </div>
+          
+            </div>
+          
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="form-control-label" for="moInput">
+                        code Affiare
+                      </label>
+                      <input
+                        name="codeAffaire"
+                        class="form-control"
+                        id="moInput"
+                        placeholder="Code Affiare"
+                        type="text"
+                        ngModel
+                        required
+                      />
+                      <div *ngIf="ngFormulaire.controls['codeAffaire'].invalid && ngFormulaire.controls['codeAffaire'].touched">
+                        code affaire est requise.
+                      </div>
+                    </div>
+                  </div>
+     
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="budgetTotalInput">
+                    Montant engagé en (ttc dh) 
+                  </label>
+                  <input
+                    name="budgetTotal"
+                    class="form-control"
+                    id="budgetTotalInput"
+                    placeholder="Budget Total"
+                    type="number"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['budgetTotal'].invalid && ngFormulaire.controls['budgetTotal'].touched">
+                    Le budget total est requis.
+                  </div>
+                </div>
+              </div>
+           
+           
+         
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="dateBuisnesInput">
+                    date affaire
+                  </label>
+                  <input
+                    name="dateBuisnes"
+                    class="form-control"
+                    id="dateBuisnesInput"
+                    placeholder="date affaire"
+                    type="date"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['dateBuisnes'].invalid && ngFormulaire.controls['dateBuisnes'].touched">
+                    La date affaire est requise.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="divisionIDInput">
+                    Division
+                  </label>
+                  <select name="divisionID" class="form-control" id="divisionIDInput" ngModel required>
+                    <option value="" disabled selected>Sélectionnez une division</option>
+                    <option *ngFor="let division of divisions" [value]="division.divisionId">{{ division?.divisionName }}</option>
+                  </select>
+                  <div *ngIf="ngFormulaire.controls['divisionID'].invalid && ngFormulaire.controls['divisionID'].touched">
+                    Veuillez sélectionner une division.
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+          </form>
+          
+          
+
+
+      <div class=" card-header border-0">
+        <h3 class=" mb-0"> <b>List des Divisions</b></h3>
+      </div>
+
+      <div class=" table-responsive" id="first-list">
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th class="sort" data-sort="name" scope="col">#</th>
+                <th class="sort" data-sort="budget" scope="col">Objet</th>
+                <th class="sort" data-sort="status" scope="col">Code Affaire</th>
+                <th class="sort" data-sort="status" scope="col">MO</th>
+               
+                <th class="sort" data-sort="status" scope="col">Budget Total</th>
+                <th class="sort" data-sort="status" scope="col">Date de création</th>
+                <th class="sort" data-sort="status" scope="col">Division</th>
+                <th class="sort" data-sort="status" scope="col">Créé par</th>
+                <th class="sort" data-sort="status" scope="col">Créé à</th>
+                <th class="sort" data-sort="status" scope="col">Mis à jour par</th>
+                <th class="sort" data-sort="status" scope="col">Mis à jour à</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr *ngFor="let ele of affaires; let i = index">
+                <th scope="row">{{ ele.businessID }}</th>
+               
+                <td class="budget" *ngIf="!ele.expanded">{{ ele.objet }}</td>
+                <td class="budget" *ngIf="ele.expanded">
+                    <input
+                      name="mo"
+                      class="form-control"
+                      placeholder="objet"
+                      type="text"
+                      [(ngModel)]="ele.objet"
+                    />
+                  </td>
+                <td class="budget" *ngIf="!ele.expanded">{{ ele.codeAffaire }}</td>
+                <td class="budget" *ngIf="ele.expanded">
+                    <input
+                      name="mo"
+                      class="form-control"
+                      placeholder="MO de l'entreprise"
+                      type="text"
+                      [(ngModel)]="ele.codeAffaire"
+                    />
+                  </td>
+                <td class="budget" *ngIf="!ele.expanded">{{ ele.mo }}</td>
+                <td class="budget" *ngIf="ele.expanded">
+                  <input
+                    name="mo"
+                    class="form-control"
+                    placeholder="Mo de l'affaire"
+                    type="text"
+                    [(ngModel)]="ele.mo"
+                  />
+                </td>
+          
+                <td class="budget" *ngIf="!ele.expanded">{{ ele.BudgetTotal }}</td>
+                <td class="budget" *ngIf="ele.expanded">
+                    <input
+                      name="mo"
+                      class="form-control"
+                      placeholder="BudgetTotal"
+                      type="text"
+                      [(ngModel)]="ele.BudgetTotal"
+                    />
+                  </td>
+                <td class="budget" *ngIf="!ele.expanded">{{ ele.dateBuisnes }}</td>
+                <td class="budget" *ngIf="ele.expanded">
+                    <input
+                      name="dateBuisnes"
+                      class="form-control"
+                      placeholder="BudgetTotal"
+                      type="date"
+                      [(ngModel)]="ele.dateBuisnes"
+                    />
+                  </td>
+                <td class="budget">{{ ele.division?.divisionName }}</td>
+                <td class="budget">{{ ele.createdBy }}</td>
+                <td class="budget">{{ ele.createdAt }}</td>
+                <td class="budget">{{ ele.updatedBy }}</td>
+                <td class="budget">{{ ele.updatedAt }}</td>
+                <td class="text-right">
+                  <div class="dropdown no-caret" dropdown>
+                    <a
+                      aria-controls="dropdown-basic"
+                      class="btn btn-sm btn-icon-only text-light dropdown-toggle"
+                      dropdownToggle
+                      href="javascript:void(0)"
+                      role="button"
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+          
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" *dropdownMenu>
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="ele.expanded = !ele.expanded">
+                        ModifierFBF
+                      </a>
+          
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="verify(ele.businessID)">
+                        Supprimer
+                      </a>
+          
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="updateBusiness(ele.businessID, i)">
+                        Sauvegarder
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+
+        <div class="pagination">
+            <button  class=" next btn btn-primary" (click)="prevPage()" [disabled]="currentPage === 0">Avant</button>
+            <span>{{currentPage}} / {{totalPages}}</span>
+            <button class=" next btn btn-primary" (click)="nextPage()" [disabled]="currentPage === totalPages">suivant</button>
+          </div>
+
+      </div>
+  
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  

@@ -1,0 +1,101 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { path } from './envirement';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserServiceService  {
+ 
+
+
+
+  // private apiUrl = 'http://localhost:8080';
+
+  private apiUrl=`${path}`;
+
+  
+
+  public imagePathBase = '../..';
+  // public imagePathBase = '/dashbord';
+
+  constructor(private httpClient: HttpClient) { 
+  }
+  private accesTocken = localStorage.getItem("access_token");
+  // private  refresh_token= localStorage.getItem("refresh_token");
+  private options2 = {
+    headers: new HttpHeaders().set('Authorization', "Bearer " + this.accesTocken)
+};
+
+public setAccesToken(accn:string){
+  this.accesTocken = accn;
+  this.options2 = {
+    headers: new HttpHeaders().set('Authorization', "Bearer " + this.accesTocken)
+};
+
+}
+
+getAccessToken(){
+  return this.accesTocken;
+}
+  private habilitations:any = []
+  private pages:any = []
+  private folders:any = []
+  // private  options2 = {
+  //   headers: new HttpHeaders().set('Authorization', "Bearer " + this.accesTocken)
+  // };
+
+
+  // buisness(page: number, size: number): Observable<any> {
+  //   const params = new HttpParams()
+  //     .set('page', page.toString())
+  //     .set('size', size.toString());
+  
+  //   return this.httpClient.get<any>(`${this.apiUrl}/businesses`, { params });
+  // }
+  
+
+  register(data:any){
+    return this.httpClient.post<any>(`${this.apiUrl}/api/v1/auth/register`,data);
+  }
+
+  auth(data:any){
+    return this.httpClient.post<any>(`${this.apiUrl}/api/v1/auth/authenticate`,data);
+  }
+
+
+  getUsersBySelectedRoleAndDivision(role: any, idDive: any) {
+    return this.httpClient.get<any>(`${this.apiUrl}/user/getUsersBySelectedRoleAndDivision/${role}/${idDive}`);
+  }
+
+  getUsers(){
+    return this.httpClient.get<any>(`${this.apiUrl}/user/getUsers`);
+
+  }
+
+  public getUser(data:any):Observable<any>{
+    return this.httpClient.get<any>(`${this.apiUrl}/user/me/${data}`);
+  }
+  
+
+  
+  updateUser(userId: number, userUpdateData: any): Observable<any> {
+    const url = `${this.apiUrl}/user/${userId}/update`;
+    return this.httpClient.post<any>(url, userUpdateData);
+  }  
+
+
+
+
+  toggleUserActiveStatus(userId: number): Observable<string> {
+    const url = `${this.apiUrl}/user/${userId}/toggle-active`;
+    return this.httpClient.get<string>(url);
+  }
+  
+
+
+
+  
+}
+

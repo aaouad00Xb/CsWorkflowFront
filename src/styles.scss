@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 8px;
+    font-weight: 800;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;} 
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #427D9D;
+    color: white;
+  }
+
+
+  .custom-fieldset {
+    border: 1px solid #ccc; /* Set border style and color */
+    padding: 10px; /* Add padding to create space between the border and content */
+    border-radius: 5px; /* Apply rounded corners to the fieldset */
+    display: inline-block; /* Display the fieldset as an inline block */
+    position: relative; /* Position the fieldset relatively */
+    width: 100%;
+  
+    background-color: #e0f4ffa8;
+  }
+  
+  .custom-fieldset legend {
+    font-size: 16px; /* Customize the font size of the fieldset title */
+    font-weight: bold; /* Make the fieldset title bold */
+    padding: 0 5px; /* Add padding to create space around the fieldset title */
+    position: absolute; /* Position the legend absolutely */
+    top: -10px; /* Adjust the top position to align with the border */
+    left: 10px; /* Adjust the left position to align with the border */
+    background-color: #fff; /* Set background color to match the fieldset background */
+  }
+
+
+  .card-header{
+    background-color: rgba(255, 166, 0, 0.356);
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+ .card-body1{
+  background-color: #FFF6F6;
+  }
+
+
+  label{
+    font-weight: bolder;
+    font-size: small;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.red-bg {
+  background-color: red;
+}
+
+
+h3{
+  font-weight:900;
+}
+
+
+.badge-red {
+  background-color:  "red";
+}

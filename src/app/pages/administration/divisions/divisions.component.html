@@ -1,0 +1,205 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">  Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> Divisions </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter une Division
+                </li>
+              </ol>
+            </nav> 
+          </div>
+  
+          <!-- <div class=" col-lg-6 col-5 text-right">
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+  
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+              Filters
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0"> <b>Ajouter une Nouvelle division</b></h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <form #ngFormulaire="ngForm" (ngSubmit)="submit(ngFormulaire)">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="divisionNameInput">
+                    Désignation
+                  </label>
+                  <input
+                    name="divisionName"
+                    class="form-control"
+                    id="divisionNameInput"
+                    placeholder="Désignation"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <!-- Add error message for validation -->
+                  <div *ngIf="ngFormulaire.controls['divisionName'].invalid && ngFormulaire.controls['divisionName'].touched">
+                    Division Name is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="divisionNameInput">
+                    Abréviation
+                  </label>
+                  <input
+                    name="abreviation"
+                    class="form-control"
+                    id="divisionNameInput"
+                    placeholder="Abréviation"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <!-- Add error message for validation -->
+                  <div *ngIf="ngFormulaire.controls['divisionName'].invalid && ngFormulaire.controls['divisionName'].touched">
+                    Division Name is required.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="poleSelect">
+                    Pole
+                  </label>
+                  <select name="pole" class="form-control" id="poleSelect" ngModel required>
+                    <option value="" disabled selected>Select a Pole</option>
+                    <!-- Use ngFor to loop through poles array -->
+                    <option *ngFor="let pole of poles" [value]="pole.poleID">{{ pole.poleName }}</option>
+                  </select>
+                  <!-- Add error message for validation -->
+                  <div *ngIf="ngFormulaire.controls['pole'].invalid && ngFormulaire.controls['pole'].touched">
+                    Please select a Pole.
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+          </form>
+          
+
+
+      <div class=" card-header border-0">
+        <h3 class=" mb-0"> <b>List des Divisions</b></h3>
+      </div>
+
+      <div class=" table-responsive" id="first-list">
+        <table class=" table align-items-center table-flush">
+          <thead class=" thead-light">
+            <tr>
+              <th class=" sort" data-sort="name" scope="col">#</th>
+
+              <th class=" sort" data-sort="budget" scope="col">Nom</th>
+              <th class=" sort" data-sort="budget" scope="col">Abréviation</th>
+
+          
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody class=" list">
+            <tr *ngFor="let ele of divisions;let i = index">
+              <th  scope="row">
+                {{ele.divisionId}}
+              </th>
+
+              <td class=" budget" *ngIf="!ele.expanded" >{{ele.divisionName}}</td>
+              <td class=" budget" *ngIf="ele.expanded" >
+                <input
+                name="poleName"
+                class=" form-control"
+                id="example3cols1Input"
+                placeholder="...."
+                type="text"
+               [(ngModel)]="ele.divisionName"
+               />
+              <td class=" budget" *ngIf="!ele.expanded" >{{ele.abreviation}}</td>
+              <td class=" budget" *ngIf="ele.expanded" >
+                <input
+                name="poleName"
+                class=" form-control"
+                id="example3cols1Input"
+                placeholder="...."
+                type="text"
+               [(ngModel)]="ele.abreviation"
+               />
+
+               </td>
+            
+             
+              <td class=" text-right">
+                <div class="dropdown no-caret" dropdown>
+                  <a
+                    aria-controls="dropdown-basic"
+                    class=" btn btn-sm btn-icon-only text-light dropdown-toggle"
+                    dropdownToggle
+                    href="javascript:void(0)"
+                    role="button"
+                  >
+                    <i class=" fas fa-ellipsis-v"> </i>
+                  </a>
+
+                  <div
+                    class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
+                    *dropdownMenu
+                  >
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="ele.expanded =!ele.expanded">
+                      Modifier
+                    </a>
+
+                    <a href="javascript:void(0)" class="dropdown-item" (click)=" verify(ele.divisionId)">
+                      Suprimer
+                    </a>
+
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="updateDivision(ele.divisionId,i)">
+                     Sauvegarder
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+      
+          </tbody>
+        </table>
+      </div>
+  
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  

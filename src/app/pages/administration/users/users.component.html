@@ -1,0 +1,570 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> Utilisateurs </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter un Utilisateur
+                </li>
+              </ol>
+            </nav>
+          </div>
+  
+          <!-- <div class=" col-lg-6 col-5 text-right">
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+  
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+              Filters
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0">Gestion des Utilisateurs</h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <div class="row flex-lg-nowrap">
+            <div class="col">
+              <div class="e-tabs mb-3 px-3">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item" style="cursor: pointer" (click)="adduser = false">
+                    <a class="nav-link active">Mes utilisateurs </a>
+                  </li>
+                  <li class="nav-item" style="cursor: pointer" (click)="adduser = true">
+                    <a class="nav-link active">Ajouter Un utilisateur</a>
+                  </li>
+                </ul>
+              </div>
+        
+              <div class="row flex-lg-nowrap" *ngIf="adduser == false">
+                <div class="col mb-3">
+                  <div class="e-panel card">
+                    <div class="card-body">
+                      <div class="card-title">
+                        <h6 class="mr-2">
+                          <span>Utilisateurs</span><small class="px-1"></small>
+                        </h6>
+                      </div>
+                      <div class="e-table">
+                        <div class="table-responsive table-lg mt-3">
+        
+                          <table class="customers" id="customers">
+                     
+                              <tr>
+                                <th class="align-top">
+                                 #
+                                </th>
+                                <th>Photo</th>
+                                <th class="max-width">Nom</th>
+                                <th class="sortable">email</th>
+                                <th class="sortable">role</th>
+                                <th class="sortable">Pole</th>
+                                <th class="sortable">division</th>
+                                <th>Accès</th>
+                                <th>Actions</th>
+                              </tr>
+                     
+                        
+                              <tr *ngFor="let ele of users;let i = index">
+                                <td class="align-middle">
+                                {{i+1}}
+                                </td>
+                                <td class="align-middle text-center">
+                                  <div
+                                    class="bg-light d-inline-flex justify-content-center align-items-center align-top"
+                                    style="
+                                      width: 35px;
+                                      height: 35px;
+                                      border-radius: 3px;
+                                    "
+                                  >
+                                    <i
+                                      class="fa fa-fw fa-photo"
+                                      style="opacity: 0.8"
+                                    ></i>
+                                  </div>
+                                </td>
+        
+                                <td *ngIf="!ele.expanded" class="text-nowrap align-middle">{{ele.name}}</td>
+                                <td *ngIf="ele.expanded" class="text-nowrap align-middle"><input type="text" class="form-control" placeholder="name" [(ngModel)]="ele.name"></td>
+                                
+        
+                                <td *ngIf="ele.expanded" class="text-nowrap align-middle">
+                                  <input type="email" class="form-control" placeholder="email" [(ngModel)]="ele.email">
+                                
+                                </td>
+                                <td  *ngIf="!ele.expanded" class="text-nowrap align-middle">
+                                  <span>{{ele.email}}</span>
+                                </td>
+                                <td  *ngIf="!ele.expanded" class="text-nowrap align-middle">
+                                  <span>{{ele.role}}</span>
+                                </td>
+                                <td   *ngIf="ele.expanded" class="text-nowrap align-middle">
+                                  <select class="form-control" id="role" name="role" [(ngModel)]="ele.role" required>
+                                    <option value="DG">Directeur Général</option>
+                                    <option value="CG">controle de gestion</option>
+                                    <option value="DAF">Directeur Administratif et Financier</option>
+                                    <option value="DP">Directeur de Pôle</option>
+                                    <option value="DIVISION_MANAGER">Division Manager</option>
+                                    <option value="PROJECT_MANAGER">Project Manager</option>
+                                    <option value="Simple_Employee">Simple employee</option>
+                                    <option value="ADMIN">Administrator</option>
+                                    <option value="COMPTABILITE">comptabilite</option>
+                                  </select>
+                                  
+                                </td>
+                                <td class="text-nowrap align-middle">
+                                  <span>{{ele.pole?.poleName}}</span>
+                                </td>
+                                <td class="text-nowrap align-middle">
+                                  <span>{{ele.division?.divisionName}}</span>
+                                </td>
+                                <td class="text-center align-middle hh">
+                                  <mat-slide-toggle   ></mat-slide-toggle>
+
+                                <label class=" custom-toggle mr-1">
+                                  <input  (change)="toggleUserActiveStatus(ele.id)" 
+                                  [(ngModel)]="ele.active" type="checkbox" />
+                  
+                                  <span
+                                    class=" custom-toggle-slider rounded-circle"
+                                    data-label-off="Non"
+                                    data-label-on="Oui"
+                                  >
+                                  </span>
+                                </label>
+
+                                </td>
+                                <td class="text-center align-middle">
+                                  <div class="btn-group align-top">
+                                    <button
+                                      class="btn btn-sm  btn-primary"
+                                    (click)="ele.expanded = !ele.expanded"
+                                    >
+                                      Edit
+                                    </button>
+                                    <button *ngIf="ele.expanded"
+                                      class="btn btn-sm  btn-primary"
+                                    (click)="ele.expanded = !ele.expanded;save_user(ele)"
+                                    >
+                                      sauvegarder
+                                    </button>
+                                  
+                                  </div>
+                                </td>
+                              </tr>
+                            
+                          </table>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                          <ul class="pagination mt-3 mb-0">
+                            <li class="disabled page-item">
+                              <a href="#" class="page-link">‹</a>
+                            </li>
+                            <li class="active page-item">
+                              <a href="#" class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">2</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">3</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">4</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">5</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">›</a>
+                            </li>
+                            <li class="page-item">
+                              <a href="#" class="page-link">»</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="" *ngIf="adduser == true">
+                <div class="card">
+                  <div class="card-body">
+                    <h5
+                      style="
+                        text-align: center;
+                        background-color: rgba(0, 0, 0, 0.274);
+                        color: white;
+                      "
+                    >
+                      Ajouter un utilisateur
+                    </h5>
+                    <form #formula1="ngForm" (ngSubmit)="register(formula1)">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Nom complet</label>
+                                <input
+                                  ngModel
+                                  class="form-control"
+                                  type="text"
+                                  name="name"
+                                  placeholder=""
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Username</label>
+                                <input
+                                  ngModel
+                                  class="form-control"
+                                  type="text"
+                                  name="username"
+                                  placeholder="veuillez saisir le nom d'utlisateur"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Email</label>
+                                <input
+                                  ngModel
+                                  class="form-control"
+                                  type="text"
+                                  name="email"
+                                  placeholder="user@example.com"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="poles">Selectionner un role</label>
+                                <select
+                                  ngModel
+                                  id="poles"
+                                  name="role"
+                                  class="form-control"
+                                  [(ngModel)]="role"
+                                  required
+                                >
+                                  <option Value="" disabled>
+                                    Selectionner un role
+                                  </option>
+                                  <option Value="DG">DG</option>
+                                  <option Value="DAF">DAF</option>
+                                  <option value="CG">controle de gestion</option>
+
+                                  <option Value="DP">DP</option>
+                                  <option Value="DIVISION_MANAGER">
+                                    DIVISION_MANAGER
+                                  </option>
+                                  <option Value="PROJECT_MANAGER">
+                                    PROJECT_MANAGER
+                                  </option>
+                                  <option Value="Simple_Employee">
+                                    Simple_Employee
+                                  </option>
+                                  <option Value="ADMIN">ADMIN</option>
+                                  <!-- <option Value="COMPTABILITE">COMPTABILITE</option> -->
+                                </select>
+                              </div>
+                            </div>
+        
+        
+                  
+                            
+                            <div class="col-sm-3" *ngIf="role=='DP' || role=='DIVISION_MANAGER' || role=='Simple_Employee' || role == 'PROJECT_MANAGER' ">
+                              <div class="form-group">
+                                <label for="poles">Select pole</label>
+                                <select
+                                  ngModel
+                                  id="poles"
+                                  required
+                                  name="poles"
+                                  class="form-control"
+                                  (change)="onPoleChange($event)"
+                                >
+                                  <option [ngValue]="null" disabled>
+                                    Selectionner un pole
+                                  </option>
+                                  <option *ngFor="let p of poles" [value]="p.poleID">
+                                    {{ p.poleName }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+        
+        
+                            <div class="col-sm-3" *ngIf=" role=='DIVISION_MANAGER' || role=='Simple_Employee' || role == 'PROJECT_MANAGER' ">
+                              <div class="form-group">
+                                <label for="divisions">Selectionner une division</label>
+                                <select
+                                  ngModel
+                                  required
+                                  id="division"
+                                  name="division"
+                                  class="form-control"
+                                  (change)="onChangeDivision($event)"
+                                >
+                                  <option [ngValue]="null" disabled>
+                                    Selectionner une division
+                                  </option>
+                                  <option
+                                    *ngFor="let d of divisions"
+                                    [value]="d.divisionId"
+                                  >
+                                    {{ d.divisionName }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+        
+                            <div class="col-sm-3" *ngIf=" role=='DIVISION_MANAGER' || role=='Simple_Employee' || role == 'PROJECT_MANAGER' ">
+                              <div class="form-group">
+                                <label for="divisions">Selectionner un Superieur</label>
+                                <select
+                                  ngModel
+                                  required
+                                  id="divisions"
+                                  name="manager"
+                                  class="form-control"
+                                >
+                                  <option [ngValue]="null" disabled>
+                                    Select a Superieur
+                                  </option>
+                                  <option *ngFor="let d of users" [value]="d.id">
+                                    {{ d.name }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+        
+                          <div class="row">
+                            <div class="col mb-3">
+                              <div class="form-group">
+                                <label>About</label>
+                                <textarea
+                                  ngModel
+                                  required
+                                  class="form-control"
+                                  rows="5"
+                                  name="bio"
+                                  placeholder=""
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-2"><b>Mot de pass</b></div>
+                      <div class="row">
+                        
+                        <div class="col-sm-6">
+                       
+                              <div class="form-group">
+                                <label>mot de pass</label>
+                                <input
+                                  ngModel
+                                  required
+                                  class="form-control"
+                                  type="password"
+                                  name="password"
+                                  placeholder="••••••"
+                                />
+                             
+                          </div>
+                          </div>
+                   
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <label>confirme mot de pass</label>
+                                <input
+                                  ngModel
+                                  required
+                                  name="confirm_password"
+                                  class="form-control"
+                                  type="password"
+                                  placeholder="••••••"
+                                />
+                              </div>
+                        
+                          </div>
+                     
+                      </div>
+        
+                
+                        <!-- <h5>Email Notifications</h5>
+                        <div class="row">
+                          <div class="col">
+                            <div class="card">
+                              <div class="card-header">
+                                Notifications relatives à la durée
+                              </div>
+                              <div class="card-body">
+                                <div class="custom-control custom-checkbox">
+                                  <input
+                                    ngModel
+                                    required
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="notifications-blog"
+                                    checked=""
+                                    name="nearDeadLine"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="notifications-blog"
+                                    >S'avertir à l'approche de la fin d'une étape</label
+                                  >
+                                </div>
+        
+                                <div class="custom-control custom-checkbox">
+                                  <input
+                                    ngModel
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="notifications-blog"
+                                    checked=""
+                                    name="deadLines"
+        
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="notifications-blog"
+                                  >
+                                    Se notifier lorsque une étape à déjà dépassé la
+                                    durée allouée
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col">
+                            <div class="card">
+                              <div class="card-header">
+                                Notifications relatives à l'hiérarchie
+                              </div>
+                              <div class="card-body">
+                                <div class="custom-control custom-checkbox">
+                                  <input 
+                                    ngModel
+                                    required
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="notifications-news"
+                                    checked=""
+                                    name="notifySysuperior"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="notifications-news"
+                                    >notifier mon superieur</label
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col">
+                            <div class="card">
+                              <div class="card-header">Notifications générales</div>
+                              <div class="card-body">
+                                <div class="custom-control custom-checkbox">
+                                  <input
+                                    ngModel
+                                    required
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="notifications-news"
+                                    checked=""
+                                    name="facturePaidDone"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="notifications-news"
+                                    >Se notifier si une des factures est déja
+                                    payé</label
+                                  >
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                  <input
+                                    ngModel
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="notifications-news"
+                                    checked=""
+                                    name="newFacutresTovalidate"
+                                  />
+                                  <label
+                                    class="custom-control-label"
+                                    for="notifications-news"
+                                    >Se notifier si une nouvelle facture néccisite la validation
+                                    </label
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                          </div> -->
+                   
+                      <div class="row">
+                        <div class="col d-flex justify-content-end">
+                          <button class="btn btn-primary" type="submit">
+                            Sauvegarder
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  
+
+
+
+  

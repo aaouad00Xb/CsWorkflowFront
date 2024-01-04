@@ -1,0 +1,356 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> contrats de sous traitance </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter un Nouveau contrat
+                </li>
+              </ol>
+            </nav>
+          </div>
+  
+          <!-- <div class=" col-lg-6 col-5 text-right">
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+  
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+              Filters
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0"> <b>Ajouter un Nouveau contrat</b>
+      </h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <form #ngFormulaire="ngForm" (ngSubmit)="submit(ngFormulaire)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="contratNumber">Numéro de contrat</label>
+                  <input
+                    name="contratNumber"
+                    class="form-control"
+                    id="contratNumber"
+                    placeholder="Numéro de facture"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['contratNumber'].invalid && ngFormulaire.controls['contratNumber'].touched">
+                    Le numéro de contrat est requis.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="signatureDateInput">Date de signature</label>
+                  <input
+                    name="signatureDate"
+                    class="form-control"
+                    id="signatureDateInput"
+                    placeholder="Date de signature"
+                    type="date"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['signatureDate'].invalid && ngFormulaire.controls['signatureDate'].touched">
+                    La date de signature est requise.
+                  </div>
+                </div>
+              </div>
+     
+          
+            <!-- Add similar blocks for other fields -->
+            <!-- 'totalAmount', 'typeContrat', 'dateDebut_contrat', 'dateFin_contrat', 'uploadedFiles', 'businessID', 'soustraitantID', 'divisionID' -->
+          <!-- ... (previous form content) ... -->
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="totalAmountInput">Montant total</label>
+        <input
+          name="totalAmount"
+          class="form-control"
+          id="totalAmountInput"
+          placeholder="Montant total"
+          type="number"
+          ngModel
+          required
+        />
+        <div *ngIf="ngFormulaire.controls['totalAmount'].invalid && ngFormulaire.controls['totalAmount'].touched">
+          Le montant total est requis.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="typeContratInput">Type de contrat</label>
+        <!-- Here, you can use a select input, radio buttons, or other appropriate input types -->
+        <!-- Adjust ngModel, options, and validation as necessary -->
+        <!-- Example with a select input -->
+        <select
+          name="typeContrat"
+          class="form-control"
+          id="typeContratInput"
+          ngModel
+          required
+        >
+          <option value="" disabled selected>Sélectionnez un type de contrat</option>
+          <option value="CONTRAT">CONTRAT</option>
+          <option value="Avenant">Avenant</option>
+          <!-- Add other options as needed -->
+        </select>
+        <div *ngIf="ngFormulaire.controls['typeContrat'].invalid && ngFormulaire.controls['typeContrat'].touched">
+          Le type de contrat est requis.
+        </div>
+      </div>
+    </div>
+  
+ 
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="dateDebut_contratInput">Date de début de contrat</label>
+        <input
+          name="dateDebut_contrat"
+          class="form-control"
+          id="dateDebut_contratInput"
+          placeholder="Date de début de contrat"
+          type="date"
+          ngModel
+          required
+        />
+        <div *ngIf="ngFormulaire.controls['dateDebut_contrat'].invalid && ngFormulaire.controls['dateDebut_contrat'].touched">
+          La date de début de contrat est requise.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-control-label" for="dateFin_contratInput">Date de fin de contrat</label>
+        <input
+          name="dateFin_contrat"
+          class="form-control"
+          id="dateFin_contratInput"
+          placeholder="Date de fin de contrat"
+          type="date"
+          ngModel
+          required
+        />
+        <div *ngIf="ngFormulaire.controls['dateFin_contrat'].invalid && ngFormulaire.controls['dateFin_contrat'].touched">
+          La date de fin de contrat est requise.
+        </div>
+      </div>
+    </div>
+
+  
+  
+    <!-- <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-control-label" for="uploadedFilesInput">Fichiers uploadés</label>
+        <input type="file" class="form-control"  multiple (change)="onFileSelected($event)" name="file" accept=".png, .jpg, .jpeg" />
+
+       
+      </div>
+    </div> -->
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="businessIDInput">Affaire</label>
+        <select
+          name="businessID"
+          class="form-control"
+          id="businessIDInput"
+          ngModel
+          required
+        >
+          <option value="" disabled selected>Sélectionnez l'Affaire</option>
+          <!-- Iterate over your business IDs -->
+          <option *ngFor="let business of business" [value]="business.businessID">{{ business.codeAffaire }}</option>
+        </select>
+        <div *ngIf="ngFormulaire.controls['businessID'].invalid && ngFormulaire.controls['businessID'].touched">
+          l'Affaire est requis.
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="soustraitantIDInput">Sous-traitant</label>
+        <select
+          name="soustraitantID"
+          class="form-control"
+          id="soustraitantIDInput"
+          ngModel
+          required
+        >
+          <option value="" disabled selected>Sélectionnez l'Sous-traitant</option>
+          <!-- Iterate over your soustraitant IDs -->
+          <option *ngFor="let soustraitant of soustraitants" [value]="soustraitant.id">{{ soustraitant.name }}</option>
+        </select>
+        <div *ngIf="ngFormulaire.controls['soustraitantID'].invalid && ngFormulaire.controls['soustraitantID'].touched">
+          L'Sous-traitant est requis.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="divisionIDInput">la division</label>
+        <select
+          name="divisionID"
+          class="form-control"
+          id="divisionIDInput"
+          ngModel
+          required
+        >
+          <option value="" disabled selected>Sélectionnez la division</option>
+          <!-- Iterate over your division IDs -->
+          <option *ngFor="let division of divisions" [value]="division.divisionId">{{ division.divisionName }}</option>
+        </select>
+        <div *ngIf="ngFormulaire.controls['divisionID'].invalid && ngFormulaire.controls['divisionID'].touched">
+          Veuillez sélectionner une division.
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="btn btn-primary" type="submit">Ajouter</button>
+  </form>
+  
+  
+  
+          
+
+
+      <div class=" card-header border-0">
+        <h3 class=" mb-0"><b>List des contrats de sous traitance</b></h3>
+      </div>
+
+      <div class=" table-responsive" id="first-list">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th class="sort" data-sort="id" scope="col">#</th>
+              <th class="sort" data-sort="contratNumber" scope="col">Numéro de contrat</th>
+              <th class="sort" data-sort="signatureDate" scope="col">Date de signature</th>
+              <th class="sort" data-sort="totalAmount" scope="col">Montant total</th>
+              <th class="sort" data-sort="typeContrat" scope="col">Type de contrat</th>
+              <th class="sort" data-sort="dateDebut_contrat" scope="col">Date de début</th>
+              <th class="sort" data-sort="dateFin_contrat" scope="col">Date de fin</th>
+              <th class="sort" data-sort="valid" scope="col">Valide</th>
+              <!-- Add columns for Business, Soustraitant, Division -->
+              <th scope="col">Affaire</th>
+              <th scope="col">Sous-traitant</th>
+              <th scope="col">Division</th>
+              <th scope="col">Créé à</th>
+              <th scope="col">Créé par</th>
+              <th scope="col">Mis à jour à</th>
+              <th scope="col">Mis à jour par</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="list">
+            <tr *ngFor="let ele of contrats; let i = index">
+              <th scope="row">{{ ele.contratID }}</th>
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.contratNumber }}</td>
+              <!-- Add input field for editing contratNumber -->
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="contratNumberInput" class="form-control" placeholder="...." type="text" [(ngModel)]="ele.contratNumber" />
+              </td>
+              <!-- Repeat the same pattern for other fields -->
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.signatureDate }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="contratNumberInput" class="form-control" placeholder="...." type="date" [(ngModel)]="ele.signatureDate" />
+              </td>
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.totalAmount }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="contratNumberInput" class="form-control" placeholder="...." type="number" [(ngModel)]="ele.totalAmount" />
+              </td>
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.typeContrat }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <select
+                name="typeContrat"
+                class="form-control"
+                id="typeContratInput"
+                ngModel
+                [(ngModel)]="ele.typeContrat"
+                required
+              >
+                <option value="" disabled selected>Sélectionnez un type de contrat</option>
+                <option value="CONTRAT">CONTRAT</option>
+                <option value="Avenant">Avenant</option>
+                <!-- Add other options as needed -->
+              </select>
+                          </td>
+
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.dateDebut_contrat }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="contratNumberInput" class="form-control" placeholder="...." type="date" [(ngModel)]="ele.dateDebut_contrat" />
+              </td>
+              <td class="budget"  *ngIf="!ele.expanded">{{ ele.dateFin_contrat }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="contratNumberInput" class="form-control" placeholder="...." type="date" [(ngModel)]="ele.dateFin_contrat" />
+              </td>
+              <td class="budget">{{ ele.valid?'validé':'en cours' }}</td>
+              <td class="budget">{{ ele.business.codeAffaire }}</td>
+             
+              <td class="budget">{{ ele.soustraitant.name }}</td>
+              <td class="budget">{{ ele.division.divisionName }}</td>
+              <td class="budget">{{ ele.createdAt }}</td>
+              <td class="budget">{{ ele.createdBy }}</td>
+              <td class="budget">{{ ele.updatedAt }}</td>
+              <td class="budget">{{ ele.updatedBy }}</td>
+              <td class="text-right">
+                <div class="dropdown no-caret" dropdown>
+                  <a aria-controls="dropdown-basic" class="btn btn-sm btn-icon-only text-light dropdown-toggle" dropdownToggle href="javascript:void(0)" role="button">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" *dropdownMenu>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="ele.expanded = !ele.expanded">Modifier</a>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="verify(ele.contratID)">Supprimer</a>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="updateContrat(ele.contratID, i)">Sauvegarder</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+  
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  

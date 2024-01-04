@@ -1,0 +1,418 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> SousTraitant </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter un SousTraitant
+                </li>
+              </ol>
+            </nav>
+          </div>
+  
+          <!-- <div class=" col-lg-6 col-5 text-right">
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+  
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+              Filters
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0"><b>Ajouter un Nouveau SousTraitant</b> </h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <form #ngFormulaire="ngForm" (ngSubmit)="submitForm(ngFormulaire)">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-check-label" for="patanteInput">
+                  Patenté
+                </label>
+                <input
+                  name="patente"
+                  class="form-check-input m-2"
+                  id="patanteInput"
+                  type="checkbox"
+                  ngModel
+                  [(ngModel)] ="patente"
+                  
+                />
+              </div>
+            </div>
+          </div>
+          
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="nameInput">
+                    Nom
+                  </label>
+                  <input
+                    name="name"
+                    class="form-control"
+                    id="nameInput"
+                    placeholder="Nom"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['name']?.invalid && ngFormulaire.controls['name'].touched">
+                    Le nom est requis.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6"  *ngIf="patente">
+                <div class="form-group">
+                  <label class="form-control-label" for="rcInput">
+                    RC
+                  </label>
+                  <input
+                    name="rc"
+                    class="form-control"
+                    id="rcInput"
+                    placeholder="RC"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['rc']?.invalid && ngFormulaire.controls['rc'].touched">
+                    RC est requis.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="!patente">
+                <div class="form-group">
+                  <label class="form-control-label" for="rcInput">
+                    CIN
+                  </label>
+                  <input
+                    name="cin"
+                    class="form-control"
+                    id="cinInput"
+                    placeholder="CIN"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['cin']?.invalid && ngFormulaire.controls['cin'].touched">
+                    CIN est requis.
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="addressInput">
+                    addresse
+                  </label>
+                  <input
+                    name="address"
+                    class="form-control"
+                    id="addressInput"
+                    placeholder="addresse"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['address']?.invalid && ngFormulaire.controls['address'].touched">
+                    L'addresse est requise.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="teleInput">
+                    Téléphone
+                  </label>
+                  <input
+                    name="tele"
+                    class="form-control"
+                    id="teleInput"
+                    placeholder="Téléphone"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['tele']?.invalid && ngFormulaire.controls['tele'].touched">
+                    Le téléphone est requis.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-control-label" for="emailInput">
+                    Email
+                  </label>
+                  <input
+                    name="email"
+                    class="form-control"
+                    id="emailInput"
+                    placeholder="Email"
+                    type="email"
+                    ngModel
+                    required
+                    email
+                  />
+                  <div *ngIf="ngFormulaire.controls['email']?.invalid && ngFormulaire.controls['email'].touched">
+                    Veuillez saisir un email valide.
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="dateAncientInput">
+                        Date d'ancienneté
+                      </label>
+                      <input
+                        name="dateAncient"
+                        class="form-control"
+                        id="dateAncientInput"
+                        placeholder="Date d'ancienneté"
+                        type="date"
+                        ngModel
+                        required
+                      />
+                      <div *ngIf="ngFormulaire.controls['dateAncient']?.invalid && ngFormulaire.controls['dateAncient'].touched">
+                        La date d'ancienneté est requise.
+                      </div>
+                    </div>
+                  </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="domainActiviteInput">
+                    Domaine d'activité
+                  </label>
+                  <input
+                    name="domainActivity"
+                    class="form-control"
+                    id="domainActiviteInput"
+                    placeholder="Domaine d'activité"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['domainActivity']?.invalid && ngFormulaire.controls['domainActivity'].touched">
+                    Le domaine d'activité est requis.
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+         
+          
+            <div class="form-group">
+              <label class="form-control-label" for="commentaireInput">
+                Commentaire
+              </label>
+              <textarea
+                name="commentaire"
+                class="form-control"
+                id="commentaireInput"
+                placeholder="Commentaire"
+                ngModel
+              ></textarea>
+            </div>
+          
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+          </form>
+          
+
+
+      <div class=" card-header border-0">
+        <h3 class=" mb-0"> <b>List des sous traitants</b> </h3>
+      </div>
+
+      <div class=" table-responsive" id="first-list">
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th class="sort" data-sort="id" scope="col">#</th>
+                <th class="sort" data-sort="name" scope="col">Nom</th>
+                <th class="sort" data-sort="rc" scope="col">RC</th>
+                <th class="sort" data-sort="rc" scope="col">CIN</th>
+                <th class="sort" data-sort="address" scope="col">addresse</th>
+                <th class="sort" data-sort="tele" scope="col">Téléphone</th>
+                <th class="sort" data-sort="email" scope="col">Email</th>
+                <th class="sort" data-sort="domainActivity" scope="col">Domaine d'activité</th>
+                <th class="sort" data-sort="dateAncient" scope="col">Date d'ancienneté</th>
+                <th class="sort" data-sort="patente" scope="col">Patente</th>
+                <th class="sort" data-sort="commentaire" scope="col">Commentaire</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+          
+            <tbody class="list">
+              <tr *ngFor="let soustraitant of soustraitants; let i = index">
+                <th scope="row">{{ soustraitant.id }}</th>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.name }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="name"
+                    class="form-control"
+                    placeholder="Nom"
+                    type="text"
+                    [(ngModel)]="soustraitant.name"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.rc }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="rc"
+                    class="form-control"
+                    placeholder="RC"
+                    type="text"
+                    [(ngModel)]="soustraitant.rc"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.cin }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="rc"
+                    class="form-control"
+                    placeholder="RC"
+                    type="text"
+                    [(ngModel)]="soustraitant.cin"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.address }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="address"
+                    class="form-control"
+                    placeholder="addresse"
+                    type="text"
+                    [(ngModel)]="soustraitant.address"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.tele }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="tele"
+                    class="form-control"
+                    placeholder="Téléphone"
+                    type="text"
+                    [(ngModel)]="soustraitant.tele"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.email }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="email"
+                    class="form-control"
+                    placeholder="Email"
+                    type="email"
+                    [(ngModel)]="soustraitant.email"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.domainActivity }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="domainActivity"
+                    class="form-control"
+                    placeholder="Domaine d'activité"
+                    type="text"
+                    [(ngModel)]="soustraitant.domainActivity"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.dateAncient | date }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="dateAncient"
+                    class="form-control"
+                    placeholder="Date d'ancienneté"
+                    type="date"
+                    [(ngModel)]="soustraitant.dateAncient"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.patente }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="patente"
+                    class="form-check-input"
+                    type="checkbox"
+                    [(ngModel)]="soustraitant.patente"
+                  />
+                </td>
+                <td class="budget" *ngIf="!soustraitant.expanded">{{ soustraitant.commentaire }}</td>
+                <td class="budget" *ngIf="soustraitant.expanded">
+                  <input
+                    name="commentaire"
+                    class="form-control"
+                    placeholder="Commentaire"
+                    type="text"
+                    [(ngModel)]="soustraitant.commentaire"
+                  />
+                </td>
+                <td class="text-right">
+                  <div class="dropdown no-caret" dropdown>
+                    <a
+                      aria-controls="dropdown-basic"
+                      class="btn btn-sm btn-icon-only text-light dropdown-toggle"
+                      dropdownToggle
+                      href="javascript:void(0)"
+                      role="button"
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+          
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" *dropdownMenu>
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="soustraitant.expanded = !soustraitant.expanded">
+                        Modifier
+                      </a>
+          
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="verify(soustraitant.id)">
+                        Supprimer
+                      </a>
+          
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="updateSoustraitant(soustraitant.id, i)">
+                        Sauvegarder
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+      </div>
+  
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  
