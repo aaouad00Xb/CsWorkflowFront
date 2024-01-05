@@ -74,6 +74,10 @@ getAccessToken(){
 
   }
 
+  getchefsByDivisionID(divisonID){
+    return this.httpClient.get<any>(`${this.apiUrl}/user/getchefsByDivisionID/${divisonID}`);
+  }
+
   public getUser(data:any):Observable<any>{
     return this.httpClient.get<any>(`${this.apiUrl}/user/me/${data}`);
   }

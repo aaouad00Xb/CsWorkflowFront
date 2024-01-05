@@ -5,6 +5,7 @@ import { ContratsSService } from 'src/app/services/contrats-s.service';
 import { DivisionserviceService } from 'src/app/services/divisionservice.service';
 import { PoleServiceService } from 'src/app/services/pole-service.service';
 import { SoustraitantService } from 'src/app/services/soustraitant.service';
+import { UserServiceService } from 'src/app/services/user-service.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,17 +20,19 @@ export class ContratsSoutraitancesComponent implements OnInit {
   business: any;
   contrats: any;
   selectedFiles: FileList;
+  chefs: any;
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
   }
 
-  constructor(private poleService:PoleServiceService,private divisionService:DivisionserviceService,private service:SoustraitantService,private affaireService:AffaireService,private contratService:ContratsSService){
+  constructor(private poleService:PoleServiceService,private divisionService:DivisionserviceService,private service:SoustraitantService,private affaireService:AffaireService,private contratService:ContratsSService,private userServ:UserServiceService){
     this.gettingAllPoles()
     this.getAllDivisions()
     this.gettingAllAffaires()
     this.gettingAllSoutraitant()
     this.gettingAllContrat()
+    
 
   }
 
@@ -38,6 +41,19 @@ export class ContratsSoutraitancesComponent implements OnInit {
     this.service.getAllSoustraitant().subscribe(res=>{
       this.soustraitants = res;
       console.log(this.poles)
+    },error=>console.log(error))
+
+  }
+  
+  divisionChange(event){
+   
+    console.error(event.target.value);
+    this.getchefsByDivisionID(event.target.value);
+  }
+  getchefsByDivisionID(divisonID){
+    this.userServ.getchefsByDivisionID(divisonID).subscribe(res=>{
+      this.chefs = res;
+      console.log(this.chefs)
     },error=>console.log(error))
 
   }
@@ -61,6 +77,8 @@ export class ContratsSoutraitancesComponent implements OnInit {
   submit(form:NgForm){
     this.contratService.createContrat(form.value).subscribe(res=>{
 
+
+      form.reset()
       console.log(res)
       Swal.fire('sauvegarde est bien effectuée')
 

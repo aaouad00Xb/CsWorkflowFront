@@ -60,7 +60,7 @@
                     ngModel
                     required
                   />
-                  <div *ngIf="ngFormulaire.controls['contratNumber'].invalid && ngFormulaire.controls['contratNumber'].touched">
+                  <div *ngIf="ngFormulaire.controls['contratNumber']?.invalid && ngFormulaire.controls['contratNumber']?.touched">
                     Le numéro de contrat est requis.
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                     ngModel
                     required
                   />
-                  <div *ngIf="ngFormulaire.controls['signatureDate'].invalid && ngFormulaire.controls['signatureDate'].touched">
+                  <div *ngIf="ngFormulaire.controls['signatureDate']?.invalid && ngFormulaire.controls['signatureDate']?.touched">
                     La date de signature est requise.
                   </div>
                 </div>
@@ -102,7 +102,7 @@
           ngModel
           required
         />
-        <div *ngIf="ngFormulaire.controls['totalAmount'].invalid && ngFormulaire.controls['totalAmount'].touched">
+        <div *ngIf="ngFormulaire.controls['totalAmount']?.invalid && ngFormulaire.controls['totalAmount']?.touched">
           Le montant total est requis.
         </div>
       </div>
@@ -126,7 +126,7 @@
           <option value="Avenant">Avenant</option>
           <!-- Add other options as needed -->
         </select>
-        <div *ngIf="ngFormulaire.controls['typeContrat'].invalid && ngFormulaire.controls['typeContrat'].touched">
+        <div *ngIf="ngFormulaire.controls['typeContrat']?.invalid && ngFormulaire.controls['typeContrat']?.touched">
           Le type de contrat est requis.
         </div>
       </div>
@@ -145,7 +145,7 @@
           ngModel
           required
         />
-        <div *ngIf="ngFormulaire.controls['dateDebut_contrat'].invalid && ngFormulaire.controls['dateDebut_contrat'].touched">
+        <div *ngIf="ngFormulaire.controls['dateDebut_contrat']?.invalid && ngFormulaire.controls['dateDebut_contrat']?.touched">
           La date de début de contrat est requise.
         </div>
       </div>
@@ -164,7 +164,7 @@
           ngModel
           required
         />
-        <div *ngIf="ngFormulaire.controls['dateFin_contrat'].invalid && ngFormulaire.controls['dateFin_contrat'].touched">
+        <div *ngIf="ngFormulaire.controls['dateFin_contrat']?.invalid && ngFormulaire.controls['dateFin_contrat']?.touched">
           La date de fin de contrat est requise.
         </div>
       </div>
@@ -196,7 +196,7 @@
           <!-- Iterate over your business IDs -->
           <option *ngFor="let business of business" [value]="business.businessID">{{ business.codeAffaire }}</option>
         </select>
-        <div *ngIf="ngFormulaire.controls['businessID'].invalid && ngFormulaire.controls['businessID'].touched">
+        <div *ngIf="ngFormulaire.controls['businessID']?.invalid && ngFormulaire.controls['businessID']?.touched">
           l'Affaire est requis.
         </div>
       </div>
@@ -216,7 +216,7 @@
           <!-- Iterate over your soustraitant IDs -->
           <option *ngFor="let soustraitant of soustraitants" [value]="soustraitant.id">{{ soustraitant.name }}</option>
         </select>
-        <div *ngIf="ngFormulaire.controls['soustraitantID'].invalid && ngFormulaire.controls['soustraitantID'].touched">
+        <div *ngIf="ngFormulaire.controls['soustraitantID']?.invalid && ngFormulaire.controls['soustraitantID']?.touched">
           L'Sous-traitant est requis.
         </div>
       </div>
@@ -226,6 +226,7 @@
       <div class="form-group">
         <label class="form-control-label" for="divisionIDInput">la division</label>
         <select
+        (change)="divisionChange($event)"
           name="divisionID"
           class="form-control"
           id="divisionIDInput"
@@ -236,8 +237,28 @@
           <!-- Iterate over your division IDs -->
           <option *ngFor="let division of divisions" [value]="division.divisionId">{{ division.divisionName }}</option>
         </select>
-        <div *ngIf="ngFormulaire.controls['divisionID'].invalid && ngFormulaire.controls['divisionID'].touched">
+        <div *ngIf="ngFormulaire.controls['divisionID']?.invalid && ngFormulaire.controls['divisionID']?.touched">
           Veuillez sélectionner une division.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="projectManagerID">Chef de projet</label>
+        <select
+    
+          name="projectManagerID"
+          class="form-control"
+          id="projectManagerID"
+          ngModel
+          required
+        >
+          <option value="" disabled selected>Sélectionnez un Chef de projet</option>
+          <!-- Iterate over your division IDs -->
+          <option *ngFor="let chef of chefs" [value]="chef?.id">{{ chef?.username  }}| <b>{{ chef?.role  }}</b></option>
+        </select>
+        <div *ngIf="ngFormulaire.controls['projectManagerID']?.invalid && ngFormulaire.controls['projectManagerID']?.touched">
+          Veuillez sélectionner un chef de projet.
         </div>
       </div>
     </div>
