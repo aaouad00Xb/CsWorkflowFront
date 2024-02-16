@@ -85,7 +85,7 @@
                 class="list-group-item list-group-item-action"
               > -->
               <div class="container">
-                <div class="row align-items-center" *ngFor="let ele of notifications">
+                <div class="notif row align-items-center" *ngFor="let ele of notifications| slice:0:5">
                   <div class="col-auto">
                     <!-- Avatar -->
                     <i class="bi bi-bell-fill fs-9"></i>
@@ -111,6 +111,7 @@
             </div>
             <!-- View all -->
             <div
+            style="cursor: pointer;"
               href="javascript:void()"
               routerLink="/components/MesNotifications"
               class="dropdown-item text-center text-primary font-weight-bold py-3"
@@ -205,16 +206,16 @@
             *dropdownMenu
           >
             <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
+              <h6 class="text-overflow m-0">Mes action!</h6>
             </div>
             <a
               routerLinkActive="active"
               [routerLink]="['/user-profile']"
               class="dropdown-item"
             >
-              <i class="ni ni-single-02"></i> <span>My profile</span>
+              <i class="ni ni-single-02"></i> <span>Mon profil</span>
             </a>
-            <a
+            <!-- <a
               routerLinkActive="active"
               [routerLink]="['/user-profile']"
               class="dropdown-item"
@@ -234,10 +235,10 @@
               class="dropdown-item"
             >
               <i class="ni ni-support-16"></i> <span>Support</span>
-            </a>
+            </a> -->
             <div class="dropdown-divider"></div>
-            <a href="javascript:void()" class="dropdown-item">
-              <i class="ni ni-user-run"></i> <span>Logout</span>
+            <a href="javascript:void()" (click)="logout()" class="dropdown-item">
+              <i class="ni ni-user-run"></i> <span>Déconnection</span>
             </a>
           </div>
         </li>

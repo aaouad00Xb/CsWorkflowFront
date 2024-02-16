@@ -61,6 +61,8 @@ export class UsersComponent{
 
  register(ngForm:NgForm){
 
+  let obj =ngForm.value;
+  obj['username'] = ngForm?.value?.email;
    this.service.register(ngForm.value).subscribe(res=>{
      console.log(res);
      ngForm.reset();

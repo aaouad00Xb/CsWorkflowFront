@@ -5,6 +5,7 @@ import {
   ElementRef,
   ViewChild
 } from "@angular/core";
+import { saveAs } from 'file-saver';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import swal from "sweetalert2";
 
@@ -25,6 +26,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { userSelector } from "src/app/store/reducers/user.reducer";
 import { StepService } from "src/app/services/step.service";
+import WebViewer from "@pdftron/webviewer";
 
 @Component({
   selector: 'app-suivi',
@@ -45,6 +47,7 @@ export class SuiviComponent implements OnInit{
   currentStepId: any;
   selectedFiles: FileList;
   stepFieldsList: any;
+  loading: boolean=false;
 
   defaultModal: BsModalRef;
   default = {
@@ -140,7 +143,38 @@ export class SuiviComponent implements OnInit{
     )
   }
 
- 
+
+
+  addElementsToPdfContainer(file:string){
+    // this.show = true;
+    const child1 = document.getElementById("viewer"); // Get the child div element
+    if(child1){
+      child1.remove();
+    }
+
+
+    const parent = document.getElementById("test");
+    const child = document.createElement("div");
+    child.id = "viewer";
+    child.classList.add("webviewer");
+    child.style.width = "100%"; // Add inline style to set width to 100%
+    child.style.height = "70vh"; // Add inline style to set height to 100vh
+    parent.appendChild(child);
+
+    WebViewer({
+      // path: ../../assets/lib,
+      path:`assets/lib`,
+      initialDoc: this.url+'/'+ file ,
+
+    },document.getElementById("viewer"))
+  }
+
+
+downloadFile(fileData: any): void {
+  this.service
+          .download(fileData)
+          .subscribe(blob => saveAs(blob, fileData.filename));
+}
 
   ngOnInit(): void {
     this.initForm();
@@ -190,16 +224,22 @@ export class SuiviComponent implements OnInit{
       for (let i = 0; i < this.selectedFiles.length; i++) {
         formData.append('files', this.selectedFiles[i]);
       }
-  
+  this.loading = true 
       this.service.uploadFileReparation(this.selectedSoustraitance.contratID,formData).subscribe(res=>{
+        this.loading = false 
+
         Swal.fire('les fichiers sont bien stockées')
         this.selectedSoustraitance = res
 
-      },err=>Swal.fire({
+      },err=>{
+        
+        this.loading = false 
+
+        Swal.fire({
         icon: 'error',
         title: 'Erreur',
         text: 'Une erreur s\'est produite. upload des fichier!!.'
-      }))
+      })})
     }
   }
 
@@ -311,8 +351,12 @@ export class SuiviComponent implements OnInit{
   }
 
   updateStepFields(){
+    this.loading = true 
+
     this.stepFields.updateStepFields(this.stepFieldsList).subscribe(
       (res)=>{
+        this.loading = false 
+
         swal.fire({
           icon:"success",
           title: "Oppération bien éffectué!",
@@ -320,6 +364,8 @@ export class SuiviComponent implements OnInit{
         })
     },
     (err)=>{
+      this.loading = false 
+
       swal.fire({
         icon:"error",
         title: "Erreur de serveur!",
@@ -440,6 +486,7 @@ export class SuiviComponent implements OnInit{
 
 
   async validate(){
+    this.loading = true;
     let valid = true 
     for(let ele of this.stepFieldsList){
       if(!ele.valid){
@@ -452,15 +499,30 @@ export class SuiviComponent implements OnInit{
       console.warn("rani dkhelt")
       if(this.selectedSoustraitance?.currentStep?.previousStep.stepID == this.nextstepID){
         this.service.transitionContratToStep(this.selectedSoustraitance.contratID,this.selectedSoustraitance?.currentStep?.previousStep?.stepID,this.commentaire).subscribe(res=>{
+        
+        
+          this.loading = false;
+
           console.log(res)
-        },err=>console.log(err))
+        },err=>
+        
+      {  
+        this.loading = false;
+      
+        swal.fire({
+          icon:"error",
+          title: "Oppération réfusée!",
+          text: "veuillez choisir votre destinataire.",
+        })
+      }
+        )
         return;
       }
     }
    
 
     if(!valid){
-      
+      this.loading = false;
       Swal.fire({
         title: "le passage vers la nouvelle étape nécessite la validation de toutes les requis",
         icon: "info",
@@ -492,16 +554,25 @@ export class SuiviComponent implements OnInit{
 
       const result = await this.stepFields.updateStepFields(this.stepFieldsList).toPromise();
       console.log(result)
-
+      this.loading = true;
       this.service.transitionContratToStep(this.selectedSoustraitance.contratID,this.selectedSoustraitance?.currentStep?.nextStep?.stepID,this.commentaire).subscribe(res=>{
-      swal.fire({
+        this.loading = false;
+    
+        swal.fire({
         icon:"success",
         title: "Oppération bien éffectué!",
         text: "Contrat est bien actualisée.",
       })
         this.getContratById()
 
-      },err=>console.log(err))
+      },err=>{
+        this.loading = false;
+        swal.fire({
+          icon:"error",
+          title: "Oppération réfusée!",
+          text: "veuillez choisir votre destinataire.",
+        })
+      })
     
     
     // }
@@ -510,7 +581,7 @@ export class SuiviComponent implements OnInit{
 
   async validateNot(){
  
-
+    this.loading = true
     if(!this.nextstepID || this.nextstepID == undefined){
       swal.fire({
         icon:"error",
@@ -523,7 +594,8 @@ export class SuiviComponent implements OnInit{
 
 
         this.service.transitionContratToStep(this.selectedSoustraitance.contratID,this.nextstepID,this.commentaire).subscribe(res=>{
-          console.log(res)
+          this.loading = false
+
           swal.fire({
             icon:"success",
             title: "Oppération bien éffectué!",
@@ -531,6 +603,8 @@ export class SuiviComponent implements OnInit{
           })
           this.getContratById()
         },err=>{
+          this.loading = false
+
           swal.fire({
             icon:"error",
             title: "Oppération réfusée!",
@@ -549,16 +623,16 @@ export class SuiviComponent implements OnInit{
 
 
   async validateDG(){
+    this.loading = true;
     let valid = true 
+
     for(let ele of this.stepFieldsList){
       if(!ele.valid){
         valid =false
       }
     }
-
-  
     if(!valid){
-      
+      this.loading = false;
       Swal.fire({
         title: "le passage vers la nouvelle étape nécessite la validation de toutes les requis",
         icon: "info",
@@ -574,6 +648,7 @@ export class SuiviComponent implements OnInit{
       console.log(result)
 
       this.service.validateContrat(this.selectedSoustraitance.contratID,"contrat bien validé").subscribe(res=>{
+        this.loading = false
       swal.fire({
         icon:"success",
         title: "Oppération bien éffectué!",
@@ -581,7 +656,14 @@ export class SuiviComponent implements OnInit{
       })
         this.getContratById()
 
-      },err=>console.log(err))
+      },err=>{
+        this.loading = false
+        swal.fire({
+          icon:"error",
+          title: "Erreur de serveur ",
+          text: "",
+        })
+      })
     
     
     // }
@@ -606,4 +688,5 @@ export class SuiviComponent implements OnInit{
 }
 
   
+
 

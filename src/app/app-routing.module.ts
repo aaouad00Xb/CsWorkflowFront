@@ -55,6 +55,11 @@ const routes: Routes = [
 
       },
       {
+        path: "SuivitFacture",
+        loadChildren: () => import('./pages/factures/factures.module').then(m => m.FacturesModule)
+
+      },
+      {
         path: "components",
         loadChildren: () => import('./pages/components/components.module').then(m => m.ComponentsModule)
       },

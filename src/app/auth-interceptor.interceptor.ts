@@ -47,23 +47,27 @@ export class AuthInterceptorInterceptor  implements HttpInterceptor {
     // Pass the cloned request with the authorization header to the next handler
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error.error.message)
+        console.log(error.error)
 
-        if(error.error.message.includes("Your session has expired.")){
-          Swal.fire({
-            title: 'Error!',
-            text: 'Session términée, veuillez connecter de nouveau.',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          })
-          this.router.navigate(['/login']); 
+        if(error.error && error.error != undefined ){
+          if(error?.error?.message.includes("Your session has expired.")){
+            Swal.fire({
+              title: 'Error!',
+              text: 'Session términée, veuillez connecter de nouveau.',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+            this.router.navigate(['/login']); 
+          }
         }
+        
         if (error.status === 0) {
           // Handle status code 0 indicating network/CORS error
           console.error('Network error occurred:', error);
           
           // Perform actions to handle network/CORS error as required
         } else if (error.status === 403) {
+          console.log(error)
           // Handle 403 Forbidden error - Redirect user to login page or perform any action
           console.log("hello interseptor")
           console.log(authToken)

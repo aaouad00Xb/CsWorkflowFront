@@ -15,6 +15,8 @@ import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { NgxPrintModule } from "ngx-print";
 import { ContratProfilComponent } from './contrat-profil/contrat-profil.component';
+import { NgxLoadingModule } from 'ngx-loading';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,14 @@ import { ContratProfilComponent } from './contrat-profil/contrat-profil.componen
   ],
   imports: [
     FormsModule,
+    PdfViewerModule,
+
     ReactiveFormsModule,
     CommonModule,
     NgxDatatableModule,
     ProgressbarModule.forRoot(),
     BsDropdownModule.forRoot(),
+    NgxLoadingModule.forRoot({}),
     PaginationModule.forRoot(),
     TooltipModule.forRoot(),
     NgxPrintModule,

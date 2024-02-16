@@ -7,15 +7,13 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ToastrModule } from "ngx-toastr";
 import { TagInputModule } from "ngx-chips";
 import { CollapseModule } from "ngx-bootstrap/collapse";
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { PresentationModule } from "./pages/presentation/presentation.module";
-
 import { BrowserModule } from "@angular/platform-browser";
 import { ComponentsModule } from "./components/components.module";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { LoginComponent } from "./login/login.component";
@@ -24,11 +22,10 @@ import { reducers } from "./store/Store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AuthInterceptorInterceptor } from "./auth-interceptor.interceptor";
 import { NgxEchartsModule } from "ngx-echarts";
-
 import { Evolution2Component } from './charts/evolution2/evolution2.component';
 import { PieComponent } from './charts/pie/pie.component';
 import { Pie2Component } from './charts/pie2/pie2.component';
-import { GaugeComponent } from './charts/gauge/gauge.component';
+import { MyGlobalPipe } from './my-global.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +33,6 @@ import { GaugeComponent } from './charts/gauge/gauge.component';
     AdminLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
- 
     Evolution2Component,
     PieComponent,
     Pie2Component,
@@ -46,6 +42,7 @@ import { GaugeComponent } from './charts/gauge/gauge.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    PdfViewerModule,
     RouterModule,
     ComponentsModule,
     BsDropdownModule.forRoot(),

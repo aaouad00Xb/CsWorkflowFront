@@ -1,0 +1,421 @@
+<div
+  class=" header header-dark bg-danger pb-6 content__title content__title--calendar"
+>
+  <div class=" container-fluid">
+    <div class=" header-body">
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-6">
+          <h6 class=" fullcalendar-title h2 text-white d-inline-block mb-0">
+            Facture en attente de validation 
+          </h6>
+
+          <nav
+            aria-label="breadcrumb"
+            class=" d-none d-lg-inline-block ml-lg-4"
+          >
+            <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+              </li>
+
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> Facture </a>
+              </li>
+
+              <li aria-current="page" class=" breadcrumb-item active">
+                Mes Factures
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" container-fluid mt--6">
+  <div class=" row">
+    <div class=" col">
+      <div class=" card card-calendar">
+        <div class=" card-header"><h5 class=" h3 mb-0">Mes Factures</h5></div>
+        <div class="card-body">
+          <fieldset class="custom-fieldset mt-3">
+            <legend>Factures en attente de validation </legend>
+  
+                <div class=" table-responsive" id="first-list">
+                  <div class="dataTables_wrapper py-4">
+                    <div class=" table-responsive"> 
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="datatable_length">
+                          <label>
+                            Afficher 
+                            <select
+                              name="datatable_length"
+                              aria-controls="datatable"
+                              class="form-control form-control-sm"
+                              (change)="entriesChange2($event)"
+                            >
+                              <option value="10" [selected]="entries2 == 10">10</option>
+                              <option value="25" [selected]="entries2 == 25">25</option>
+                              <option value="50" [selected]="entries2 == 50">50</option>
+                            </select>
+                            Factures
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div id="datatable_filter" class="dataTables_filter">
+                         
+                          
+
+                            <div class="input-group mb-3">
+                              <input
+                              type="search"
+                              class="form-control"
+                              placeholder="Multi recherche"
+                              aria-controls="datatable"
+                              (keyup)="filterTable2($event)"
+                            />  <span style="background-color: orange;color: white;" class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+
+                          
+                          </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <ngx-datatable
+                    class="bootstrap"
+                    [columnMode]="'force'"
+                    name="Name"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [limit]="entries !== -1 ? entries : undefined"
+                    [rows]="temp2"
+                    [style.width.%]="120"
+                    (activate)="onActivate($event)"
+                  >
+                    <!-- Define ngx-datatable columns -->
+
+                    <ngx-datatable-column name="Actions">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="btn btn-default p-1" (click)=" onEditAction(row)"><i class="bi bi-pencil-fill"></i></button>
+                        <button class="btn btn-default p-1" (click)="onRowAction(row)"><i class="bi bi-eye-fill"></i></button>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [canAutoResize]="true" name="#" prop="factureID"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true"  name="Numéro de facture" prop="factureNumber"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Date de facturation" prop="factureDate">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.factureDate | date: 'yyyy-MM-dd' }}
+                      </ng-template>
+                    </ngx-datatable-column> 
+                    <ngx-datatable-column [canAutoResize]="true" name="Etape" prop="currentStep.stepName"></ngx-datatable-column>
+ 
+                    <ngx-datatable-column  [canAutoResize]="true" name="Dans cette etape depuis" prop="entryDate">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                       
+                        <span class="badge bg-warning text-white"> {{ row?.factureStepEntryDate?.entryDate | date: 'yyyy-MM-dd' }}</span> 
+                      </ng-template>
+                    </ngx-datatable-column>  
+                    <ngx-datatable-column  [canAutoResize]="true" name="Montant total" prop="totalAmount"></ngx-datatable-column>
+                    <!-- Add more columns as per your requirement -->
+                    <ngx-datatable-column [canAutoResize]="true" name="Valide" prop="valid">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span *ngIf="row.valid; else notValid" > <span class="badge bg-success">Factures validés</span> </span>
+                        <ng-template #notValid> <span class="badge bg-warning text-white">En cours</span>            </ng-template>
+                      </ng-template>
+                    </ngx-datatable-column>                    
+                    <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="contratSousTraitance.business.codeAffaire"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Objet" prop="contratSousTraitance.business.objet"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="contrat de Sous-traitance" prop="contratSousTraitance.contratNumber"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="contratSousTraitance.division.divisionName"></ngx-datatable-column>
+                    <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.createdAt | date: 'yyyy-MM-dd HH:mm' }}
+                      </ng-template>
+                    </ngx-datatable-column>                    
+                    <ngx-datatable-column  [canAutoResize]="true" name="Créé par" prop="createdBy"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour à" prop="updatedAt">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.updatedAt | date: 'yyyy-MM-dd HH:mm' }}
+                      </ng-template>
+                    </ngx-datatable-column>  
+                    <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour par" prop="updatedBy"></ngx-datatable-column> -->
+                  </ngx-datatable>
+                    </div>
+                   
+                  
+                  </div>
+                  
+              
+            
+            
+
+              
+            </div>
+            
+
+        </fieldset>
+
+
+        <fieldset class="custom-fieldset mt-3">
+            <legend>Factures en cours de validation chez les autres </legend>
+
+
+            <div class=" table-responsive" id="first-list">
+              <div class="dataTables_wrapper py-4">
+                <div class=" table-responsive"> 
+                <div class="row">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="datatable_length">
+                      <label>
+                        Afficher 
+                        <select
+                          name="datatable_length"
+                          aria-controls="datatable"
+                          class="form-control form-control-sm"
+                          (change)="entriesChange3($event)"
+                        >
+                          <option value="10" [selected]="entries3 == 10">10</option>
+                          <option value="25" [selected]="entries3 == 25">25</option>
+                          <option value="50" [selected]="entries3 == 50">50</option>
+                        </select>
+                        Factures
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div id="datatable_filter" class="dataTables_filter">
+                     
+
+                      <div class="input-group mb-3">
+                        <input
+                        type="search"
+                        class="form-control"
+                        placeholder="Multi recherche"
+                        aria-controls="datatable"
+                        (keyup)="filterTable3($event)"
+                      />  <span style="background-color: orange;color: white;" class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+
+                    
+                    </div>
+
+                    </div>
+                  </div>
+                </div>
+                
+                <ngx-datatable
+                class="bootstrap"
+                [columnMode]="'force'"
+                name="Name"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="entries !== -1 ? entries : undefined"
+                [rows]="temp3"
+                [style.width.%]="120"
+                (activate)="onActivate($event)"
+              >
+              <ngx-datatable-column name="Actions">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button class="btn btn-default p-1" (click)="onRowAction(row)"><i class="bi bi-eye-fill"></i></button>
+                  <!-- You can have any action component here -->
+                </ng-template>
+              </ngx-datatable-column>
+                <!-- Define ngx-datatable columns -->
+                <ngx-datatable-column [canAutoResize]="true" name="#" prop="factureID"></ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true"  name="Numéro de facture" prop="factureNumber"></ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true" name="Date de facturation" prop="factureDate">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.factureDate | date: 'yyyy-MM-dd HH:mm' }}
+                  </ng-template>
+                </ngx-datatable-column>  
+                <ngx-datatable-column [canAutoResize]="true" name="Etape" prop="currentStep.stepName"></ngx-datatable-column>
+
+                <ngx-datatable-column  [canAutoResize]="true" name="Montant total" prop="totalAmount"></ngx-datatable-column>
+                <!-- Add more columns as per your requirement -->
+                <!-- <ngx-datatable-column  [canAutoResize]="true" name="Valide" prop="valid"></ngx-datatable-column> -->
+                <ngx-datatable-column [canAutoResize]="true" name="Valide" prop="valid">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <span *ngIf="row.valid; else notValid" > <span class="badge bg-success">Factures validés</span> </span>
+                    <ng-template #notValid> <span class="badge bg-warning text-white">En cours</span>            </ng-template>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="contratSousTraitance.business.codeAffaire"></ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true" name="Objet" prop="contratSousTraitance.business.objet"></ngx-datatable-column>
+
+                    <ngx-datatable-column  [canAutoResize]="true" name="contrat de Sous-traitance" prop="contratSousTraitance.contratNumber"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="contratSousTraitance.division.divisionName"></ngx-datatable-column>
+                <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.createdAt | date: 'yyyy-MM-dd HH:mm' }}
+                  </ng-template>
+                </ngx-datatable-column>                    
+                <ngx-datatable-column  [canAutoResize]="true" name="Créé par" prop="createdBy"></ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour à" prop="updatedAt">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.updatedAt | date: 'yyyy-MM-dd HH:mm' }}
+                  </ng-template>
+                </ngx-datatable-column>  
+                <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour par" prop="updatedBy"></ngx-datatable-column> -->
+              </ngx-datatable>
+                </div>
+               
+              
+              </div>
+              
+          
+        
+        
+
+          
+        </div>
+
+        </fieldset>
+
+        <fieldset class="custom-fieldset mt-3">
+            <legend>Factures Validée</legend>
+            <div class=" table-responsive" id="first-list">
+              <div class="dataTables_wrapper py-4">
+                <div class=" table-responsive"> 
+                <div class="row">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="datatable_length">
+                      <label>
+                        Afficher 
+                        <select
+                          name="datatable_length"
+                          aria-controls="datatable"
+                          class="form-control form-control-sm"
+                          (change)="entriesChange($event)"
+                        >
+                          <option value="10" [selected]="entries == 10">10</option>
+                          <option value="25" [selected]="entries == 25">25</option>
+                          <option value="50" [selected]="entries == 50">50</option>
+                        </select>
+                        Factures
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div id="datatable_filter" class="dataTables_filter">
+                     
+                      <div class="input-group mb-3">
+                        <input
+                        type="search"
+                        class="form-control"
+                        placeholder="Multi recherche"
+                        aria-controls="datatable"
+                        (keyup)="filterTable($event)"
+                      />  <span style="background-color: orange;color: white;" class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+
+                    
+                    </div>
+
+                    </div>
+                  </div>
+                </div>
+                
+                  <ngx-datatable
+                  class="bootstrap"
+                  [columnMode]="'force'"
+                  name="Name"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="entries !== -1 ? entries : undefined"
+                  [rows]="temp"
+                  [style.width.%]="120"
+                  (activate)="onActivate($event)"
+                >
+                  <!-- Define ngx-datatable columns -->
+                  <ngx-datatable-column name="Actions">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <button class="btn btn-default p-1" (click)="onRowAction(row)"><i class="bi bi-eye-fill"></i></button>
+                      <!-- You can have any action component here -->
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column [canAutoResize]="true" name="#" prop="factureID"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true"  name="Numéro de contrat" prop="factureNumber"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="Date de facturation" prop="factureDate">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.factureDate | date: 'yyyy-MM-dd HH:mm' }}
+                    </ng-template>
+                  </ngx-datatable-column>  
+                  <ngx-datatable-column [canAutoResize]="true" name="Etape" prop="currentStep.stepName"></ngx-datatable-column>
+
+                  <ngx-datatable-column  [canAutoResize]="true" name="Montant total" prop="totalAmount"></ngx-datatable-column>
+                  <!-- Add more columns as per your requirement -->
+                  <ngx-datatable-column [canAutoResize]="true" name="Valide" prop="valid">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <span *ngIf="row.valid; else notValid" > <span class="badge bg-success">Factures validés</span> </span>
+                      <ng-template #notValid> <span class="badge bg-warning text-white">En cours</span>            </ng-template>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="business.codeAffaire"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="Objet" prop="contratSousTraitance.business.objet"></ngx-datatable-column>
+
+                  <ngx-datatable-column  [canAutoResize]="true" name="Sous-traitant" prop="soustraitant.name"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="division.divisionName"></ngx-datatable-column>
+                  <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.createdAt | date: 'yyyy-MM-dd HH:mm' }}
+                    </ng-template>
+                  </ngx-datatable-column>                    
+                  <ngx-datatable-column  [canAutoResize]="true" name="Créé par" prop="createdBy"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour à" prop="updatedAt">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.updatedAt | date: 'yyyy-MM-dd HH:mm' }}
+                    </ng-template>
+                  </ngx-datatable-column>  
+                  <ngx-datatable-column  [canAutoResize]="true" name="Mis à jour par" prop="updatedBy"></ngx-datatable-column> -->
+                </ngx-datatable>
+                </div>
+               
+              
+              </div>
+              
+            </div>
+        
+            
+
+        </fieldset>
+
+
+        
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        
+   
+      
+
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="test">
+        
+                <div id="viewer" class="webviewer">
+                </div>
+        
+        
+              </div>
+        
+            </div>
+          </div>
+                </div>

@@ -10,6 +10,7 @@ import { AffaireComponent } from './affaire/affaire.component';
 import { SoutraitantComponent } from './soutraitant/soutraitant.component';
 import { ContratsSoutraitancesComponent } from './contrats-soutraitances/contrats-soutraitances.component';
 import { UsersComponent } from './users/users.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 
@@ -27,6 +28,7 @@ import { UsersComponent } from './users/users.component';
     ReactiveFormsModule,
     CommonModule,
     BsDropdownModule.forRoot(),
+    NgxLoadingModule.forRoot({}),
     RouterModule.forChild(AdministrationRoutes),
   ]
 })

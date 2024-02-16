@@ -89,6 +89,23 @@ export const ROUTES: RouteInfo[] = [
 
     ]
   },
+  {
+    path: "/SuivitFacture",
+    title: "Mes Factures",
+    type: "sub",
+    icontype: "ni-ungroup text-orange",
+    collapse: "examples",
+    isCollapsed: true,
+    children: [
+      { path: "createsFacture", title: "Ajouter Facture", type: "link" },
+      { path: "mesFactures", title: "Mes factures", type: "link" },
+      { path: "rechercheFactures", title: "Recherche facture", type: "link" },
+     
+      // { path: "test", title: "test", type: "link" },
+     
+
+    ]
+  },
   // {
   //   path: "/examples",
   //   title: "Examples",

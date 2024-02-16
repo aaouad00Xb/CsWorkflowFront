@@ -21,6 +21,7 @@ export class ContratsSoutraitancesComponent implements OnInit {
   contrats: any;
   selectedFiles: FileList;
   chefs: any;
+  loading:boolean = false
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
@@ -75,7 +76,9 @@ export class ContratsSoutraitancesComponent implements OnInit {
   }
 
   submit(form:NgForm){
+    this.loading = true
     this.contratService.createContrat(form.value).subscribe(res=>{
+      this.loading = false
 
 
       form.reset()
@@ -110,11 +113,18 @@ export class ContratsSoutraitancesComponent implements OnInit {
 
 
 
-    },error=> Swal.fire({
+    },error=> {
+      
+      this.loading = false
+
+      Swal.fire({
       icon: 'error',
       title: 'Erreur',
       text: 'Une erreur s\'est produite. Route déja utilisé dans une formulaire.'
-    }))
+    })}
+    
+    
+    )
   }
 
 

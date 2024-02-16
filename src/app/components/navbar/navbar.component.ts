@@ -10,6 +10,7 @@ import {
 import { Store } from "@ngrx/store";
 import { NotificationServiceService } from "src/app/services/notification-service.service";
 import { userSelector } from "src/app/store/reducers/user.reducer";
+import { AddUser } from "src/app/store/reducers/actions/UserActions";
 
 @Component({
   selector: "app-navbar",
@@ -172,6 +173,15 @@ export class NavbarComponent implements OnInit {
 
 
 
+
+  logout(){
+    this.store.dispatch(new AddUser({}))
+    localStorage.removeItem("access_token")
+    this.router.navigate(['/login']);
+    
+    
+
+  }
   
   ngOnDestroy() {
     // Unsubscribe to route parameter changes to avoid memory leaks

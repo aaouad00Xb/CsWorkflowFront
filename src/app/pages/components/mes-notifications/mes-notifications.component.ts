@@ -20,6 +20,10 @@ export class MesNotificationsComponent implements OnInit {
   notifications: any = [];
   path = imagePath
   user: any;
+  hasContrat: boolean = false;
+  hasFacture: boolean = false;
+  forMe: boolean = false;
+  filteredNotifications: any = [];
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
@@ -33,6 +37,20 @@ export class MesNotificationsComponent implements OnInit {
     
   }
 
+
+
+  
+
+  applyFilters() {
+    this.filteredNotifications = this.notifications.filter(notification => {
+      let matchContrat = !this.hasContrat || notification.contratID != null;
+      let matchFacture = !this.hasFacture || notification.factureID != null;
+      let matchForMe = !this.forMe || notification.forMe;
+
+      return matchContrat && matchFacture && matchForMe;
+    });
+  }
+
   checkUnreadNotifications() {
     this.notificationsService.getUnreadNotifications(this.user?.id).subscribe(
       (notifications) => {
@@ -42,6 +60,7 @@ export class MesNotificationsComponent implements OnInit {
         console.log("notifications");
         console.log(notifications);
         this.notifications = notifications
+        this.filteredNotifications = notifications
         
       },
       (error) => {
@@ -94,18 +113,23 @@ export class MesNotificationsComponent implements OnInit {
   }
   toMe(type:boolean){
     if(type){
-        return `assets/img/important.png`
+        return `assets/img/appel-a-laction.png`
     }else{
       // return `assets/img/sticky-notes.png`
-      return `assets/img/info.png`
+      return `assets/img/informatif.png`
     }
   }
 
 
   onRowAction(ele) {
     // Navigating to the 'about' route with parameters
-    console.log(ele)
-    this.router.navigate(['/Suivitcontrat/test', {contratID:ele}]);
+    if(ele.contratID!= null){
+      this.router.navigate(['/Suivitcontrat/test', {contratID:ele.contratID}]);
+
+    }else{
+      this.router.navigate(['/SuivitFacture/test', {factureID:ele.factureID}]);
+
+    }
   }
 
 

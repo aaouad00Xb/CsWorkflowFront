@@ -1,0 +1,494 @@
+<div
+  class=" header header-dark bg-danger pb-6 content__title content__title--calendar"
+>
+  <div class=" container-fluid">
+    <div class=" header-body">
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-6">
+          <h6 class=" fullcalendar-title h2 text-white d-inline-block mb-0">
+            Mes Contrats
+          </h6>
+
+          <nav
+            aria-label="breadcrumb"
+            class=" d-none d-lg-inline-block ml-lg-4"
+          >
+            <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+              </li>
+
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> Contrat </a>
+              </li>
+
+              <li aria-current="page" class=" breadcrumb-item active">
+                Suivi Contrat
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" container-fluid mt--6">
+  <div class=" row">
+    <div class=" col">
+      <div class=" card card-calendar">
+        <div class=" card-header"><h5 class=" h3 mb-0">Détails du Contrat</h5></div>
+        <div class="card-body">
+         
+        
+        <hr>
+        <div>
+          <h3>Temps écoulé dans cette étape </h3>
+          <p *ngIf="entryDate !=null" class="leo">{{ formatTime(elapsedSeconds) }}</p>
+       
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <h3 >Contrat dans cette étape depuis: <span *ngIf="entryDate !=null" class="badge bg-secondary">{{entryDate?.entryDate| date:"dd/MM/yy HH:mm"}} </span></h3>
+ 
+        </div>
+
+
+
+        <section class="step-wizard pt-3">
+          <ul class="step-wizard-list">
+              <li class="step-wizard-item" [ngClass]="selectedSoustraitance?.currentStep?.stepID == 1?'current-item':''">
+                  <span class="progress-count" >1</span>
+                  <span class="progress-label">Validation du CP</span>
+              </li>
+              <li class="step-wizard-item " [ngClass]="selectedSoustraitance?.currentStep?.stepID == 2?'current-item':''">
+                  <span class="progress-count">2</span>
+                  <span class="progress-label">Validation du CD</span>
+              </li>
+              <li class="step-wizard-item " [ngClass]="selectedSoustraitance?.currentStep?.stepID == 3?'current-item':''">
+                  <span class="progress-count">3</span>
+                  <span class="progress-label">Validation du DP</span>
+              </li>
+              <li class="step-wizard-item" [ngClass]="selectedSoustraitance?.currentStep?.stepID == 4?'current-item':''">
+                  <span class="progress-count">4</span>
+                  <span class="progress-label">vérification & Approuvation du CG  </span>
+              </li>
+              <li class="step-wizard-item" [ngClass]="selectedSoustraitance?.currentStep?.stepID == 5?'current-item':''">
+                  <span class="progress-count">5</span>
+                  <span class="progress-label">Validation DAF</span>
+              </li>
+              <li class="step-wizard-item" [ngClass]="selectedSoustraitance?.currentStep?.stepID == 6?'current-item':''">
+                  <span class="progress-count">6</span>
+                  <span class="progress-label">Signature du DG</span>
+              </li>
+          </ul>
+      </section>
+        
+       
+        
+        
+        <h3 for="">Sous-traitance </h3> 
+    
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="contratNumber">Numéro de contrat</label>
+                <input
+                  name="contratNumber"
+                  class="form-control"
+                  id="contratNumber"
+                  placeholder="Numéro de facture"
+                  type="text"
+                  [(ngModel)]="selectedSoustraitance.contratNumber"
+                  disabled
+                />
+                
+              </div>
+            </div>
+        
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="signatureDateInput">Date de signature</label>
+                <input
+                  name="signatureDate"
+                  class="form-control"
+                  id="signatureDateInput"
+                  placeholder="Date de signature"
+                  type="date"
+                  [(ngModel)]="selectedSoustraitance.signatureDate" [ngModel]="selectedSoustraitance.signatureDate | date:'y-MM-dd'"
+                  disabled
+                />
+                
+              </div>
+            </div>
+   
+        
+          <!-- Add similar blocks for other fields -->
+          <!-- 'totalAmount', 'typeContrat', 'dateDebut_contrat', 'dateFin_contrat', 'uploadedFiles', 'businessID', 'soustraitantID', 'divisionID' -->
+        <!-- ... (previous form content) ... -->
+
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="totalAmountInput">Montant total</label>
+      <input
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="number"
+        [(ngModel)]="selectedSoustraitance.totalAmount"
+
+        disabled
+      />
+      
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="typeContratInput">Type de contrat</label>
+      <!-- Here, you can use a select input, radio buttons, or other appropriate input types -->
+      <!-- Adjust ngModel, options, and validation as necessary -->
+      <!-- Example with a select input -->
+      <select
+        name="typeContrat"
+        class="form-control"
+        id="typeContratInput"
+        [(ngModel)]="selectedSoustraitance.typeContrat"
+        disabled
+      >
+        <option value="" disabled selected>Sélectionnez un type de contrat</option>
+        <option value="CONTRAT">CONTRAT</option>
+        <option value="Avenant">Avenant</option>
+        <!-- Add other options as needed -->
+      </select>
+    
+    </div>
+  </div>
+
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="dateDebut_contratInput">Date de début de contrat</label>
+      <input
+        name="dateDebut_contrat"
+        class="form-control"
+        id="dateDebut_contratInput"
+        placeholder="Date de début de contrat"
+        type="date"
+        [(ngModel)]="selectedSoustraitance.dateDebut_contrat" [ngModel]="selectedSoustraitance.dateDebut_contrat | date:'y-MM-dd'"
+        disabled
+      />
+      
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="dateFin_contratInput">Date de fin de contrat</label>
+      <input
+        name="dateFin_contrat"
+        class="form-control"
+        id="dateFin_contratInput"
+        placeholder="Date de fin de contrat"
+        type="date"
+        [(ngModel)]="selectedSoustraitance.dateFin_contrat" [ngModel]="selectedSoustraitance.dateFin_contrat | date:'y-MM-dd'"
+        disabled
+      />
+      
+    </div>
+  </div>
+
+
+
+ 
+
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="businessIDInput">Affaire</label>
+     
+      <input 
+      *ngIf="selectedSoustraitance.business"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.business.codeAffaire"
+
+        disabled
+      />
+      <input 
+      *ngIf="!selectedSoustraitance.business"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="code affaire"
+        type="text"
+
+        disabled
+      />
+
+      
+    </div>
+  </div>
+
+  <div class="col-md-4">  
+    <div class="form-group">
+      <label class="form-control-label" for="soustraitantIDInput"> sous-traitant</label>
+      <input 
+      *ngIf="selectedSoustraitance.soustraitant"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.soustraitant.name"
+
+        disabled
+      />
+      <input
+      *ngIf="!selectedSoustraitance.soustraitant"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder=""
+        type="text"
+        disabled
+      />
+
+     
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-group">
+    <label for="currentStep">Etape courrante:</label>
+    <input type="text" class="form-control" id="currentStep" [value]="selectedSoustraitance?.currentStep?.stepName                    " name="currentStep" ngModel disabled >
+  </div>
+</div>
+
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="divisionIDInput">Division</label>
+     
+      <input 
+      *ngIf="selectedSoustraitance.division"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.division.divisionName"
+
+        disabled
+      />
+      <input
+      *ngIf="!selectedSoustraitance.division"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder=""
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+</div>
+
+
+
+
+<table id="customers">
+  <thead>
+
+    <tr>
+      <th>#</th>
+      <th>Nom original</th>
+      <th>Type </th>
+      <th>Taille </th>
+      <th>Ajouté Par </th>
+      <th>Ajouté à </th>
+   
+      <th>action </th>
+     
+    </tr>
+
+  </thead>
+  <tbody>
+     
+      <tr *ngFor="let c of selectedSoustraitance?.uploadedFiles;let i = index">
+        <td >{{i+1}}</td>
+        <td >{{c.originalFilename}}</td>
+        <td >{{c.type}}</td>
+        <td >{{c.size}} ko</td>
+        <td >{{c.createdBy}} </td>
+        <td >{{c.createdAt}} </td>
+        <td style="background-color: #6db9ef60;"><button class="btn btn-primary py-2" (click)="openImageInNewWindow(c.path)"><i class="bi bi-eye-fill "></i></button></td>
+       
+
+       
+      </tr>
+
+  </tbody>
+</table>
+        
+      
+        
+    
+          <fieldset class="custom-fieldset mt-4">
+            <legend>Suivi d'un Contrat</legend>
+           
+           
+            <div class=" col-lg-12 mt-3">
+              <div class=" card">
+                <div class=" card-header bg-transparent">
+                  <h3 class=" mb-0">workflow</h3>
+                </div>
+        
+                <div class=" card-body">
+                  <div
+                    class=" timeline timeline-one-side"
+                    data-timeline-axis-style="dashed"
+                    data-timeline-content="axis"
+                  >
+
+
+                    <div class=" timeline-block p-2" *ngFor="let ele of history">
+                      <span class="timeline-step " [ngClass]="ele.type =='disprove'?'badge-red':ele.type =='prove'?'badge-success':'badge-info'">
+                        <i class=" ni ni-bell-55"> </i>
+                      </span>
+        
+                      <div class=" timeline-content">
+                        <small class=" text-muted font-weight-bold"> {{ele.createdAt | date:"dd-MM-yyyy HH:mm"}}  <span class=" badge badge-pill" [ngClass]="ele.type =='disprove'?'badge-red':ele.type =='prove'?'badge-success':'badge-info'">{{ele.type}}</span></small>
+        
+                        <h5 class=" mt-3 mb-0">Nouveau message</h5>
+        
+                        <p class="text-sm mt-1 mb-0" *ngIf="!ele.commentaire || ele.commentaire.trim() === ''">
+                          Pas de commentaire
+                      </p>
+                      
+                      <p class="text-sm mt-1 mb-0" *ngIf="ele.commentaire && ele.commentaire.trim() !== ''">
+                          {{ ele.commentaire }}
+                      </p>
+        
+                        <div class=" mt-3">
+                          <span class=" badge badge-pill mr-1"  [ngClass]="ele.type =='disprove'?'badge-red':ele.type =='prove'?'badge-success':'badge-info'">
+                            {{ele.createdBy}}
+                          </span>
+        
+                          <span class=" badge badge-pill  mr-1" >
+                            Nouvelle étape :  
+                          </span>
+        
+                          <span class=" badge badge-pill" [ngClass]="ele.type =='disprove'?'badge-red':ele.type =='prove'?'badge-success':'badge-info'">
+                            {{ele.step?.stepName}} 
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+        
+        
+                   
+                
+        
+                     
+        
+        
+           
+          </fieldset>
+    
+        </div>      
+      </div>
+
+      
+
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- <button
+                class=" btn btn-block btn-primary mb-3"
+                data-target="#modal-default"
+                data-toggle="modal"
+                type="button"
+                (click)="openDefaultModal(modalDefault)"
+              >
+                Default
+              </button> -->
+              <ng-template #modalDefault>
+                <div class=" modal-header">
+                  <h6 class=" modal-title" id="modal-title-default">
+                    Laisse un commentaire a votre destinataire
+                  </h6>
+
+                  <button
+                    aria-label="Close"
+                    class=" close"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                    <span aria-hidden="true"> × </span>
+                  </button>
+                </div>
+
+                <div class=" modal-body">
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Commentaire" [(ngModel)]="commentaire" id="floatingTextarea"></textarea>
+                </div>
+
+                </div>
+
+                <div class=" modal-footer">
+                  <button class=" btn btn-primary"    (click)="defaultModal.hide();validate()" type="button">
+                    Confirmer
+                  </button>
+
+                  <button
+                    class=" btn btn-link ml-auto"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                    Close
+                  </button>
+                </div>
+              </ng-template>
+
+<div  #buttonContainer  
+></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+

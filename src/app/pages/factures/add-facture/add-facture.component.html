@@ -1,0 +1,270 @@
+<div class=" header bg-danger pb-6">
+    <div class=" container-fluid">
+      <div class=" header-body">
+        <div class=" row align-items-center py-4">
+          <div class=" col-lg-6 col-7">
+            <h6 class=" h2 text-white d-inline-block mb-0">Administration</h6>
+  
+            <nav
+              aria-label="breadcrumb"
+              class=" d-none d-md-inline-block ml-md-4"
+            >
+              <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+                </li>
+  
+                <li class=" breadcrumb-item">
+                  <a href="javascript:void(0)"> Factures des contrats de sous traitance </a>
+                </li>
+  
+                <li aria-current="page" class=" breadcrumb-item active">
+                  Ajouter un Nouvelle facture
+                </li>
+              </ol>
+            </nav>
+          </div>
+  
+          <!-- <div class=" col-lg-6 col-5 text-right">
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)"> New </a>
+  
+            <a class=" btn btn-sm btn-neutral" href="javascript:void(0)">
+              Filters
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=" container-fluid mt--6">
+    <div class=" card mb-4">
+      <div class=" card-header"><h3 class=" mb-0"> <b>Ajouter une nouvelle facture</b>
+      </h3></div>
+ 
+
+
+      <div class=" card-body">
+
+        <form #ngFormulaire="ngForm" (ngSubmit)="submit(ngFormulaire)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="factureNumber">Numéro de facture</label>
+                  <input
+                    name="factureNumber"
+                    class="form-control"
+                    id="factureNumber"
+                    placeholder="Numéro de facture"
+                    type="text"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['factureNumber']?.invalid && ngFormulaire.controls['factureNumber']?.touched">
+                    Le numéro de contrat est requis.
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="factureDateInput">Date de facturation</label>
+                  <input
+                    name="factureDate"
+                    class="form-control"
+                    id="factureDateInput"
+                    placeholder="Date de signature"
+                    type="date"
+                    ngModel
+                    required
+                  />
+                  <div *ngIf="ngFormulaire.controls['factureDate']?.invalid && ngFormulaire.controls['factureDate']?.touched">
+                    La date de signature est requise.
+                  </div>
+                </div>
+              </div>
+     
+          
+            <!-- Add similar blocks for other fields -->
+            <!-- 'totalAmount', 'typeContrat', 'dateDebut_contrat', 'dateFin_contrat', 'uploadedFiles', 'businessID', 'soustraitantID', 'contratSousTraitanceID' -->
+          <!-- ... (previous form content) ... -->
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-control-label" for="uploadedFilesInput">Fichiers uploadés</label>
+                <input type="file" class="form-control"  multiple (change)="onFileSelected($event)" name="file" accept=".png, .jpg, .jpeg" />
+
+            
+            </div>
+            </div>
+
+    
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-control-label" for="totalAmountInput">Montant total</label>
+              <input
+                name="totalAmount"
+                class="form-control"
+                id="totalAmountInput"
+                placeholder="Montant total"
+                type="number"
+                ngModel
+                required
+              />
+              <div *ngIf="ngFormulaire.controls['totalAmount']?.invalid && ngFormulaire.controls['totalAmount']?.touched">
+                Le montant total est requis.
+              </div>
+            </div>
+          </div>
+   
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="form-control-label" for="contratSousTraitanceIDInput">Contrat</label>
+        <select
+        (change)="divisionChange($event)"
+          name="contratSousTraitanceID"
+          class="form-control"
+          id="contratSousTraitanceIDInput"
+          ngModel
+          [(ngModel)]="selectedContrat.contratID"
+          required
+        >
+          <option value="" disabled selected>Sélectionnez le Contrat</option>
+          <!-- Iterate over your division IDs -->
+          <option *ngFor="let c of contrats" [value]="c.contratID" >{{ c.contratNumber }}</option>
+        </select>
+        <div *ngIf="ngFormulaire.controls['contratSousTraitanceID']?.invalid && ngFormulaire.controls['contratSousTraitanceID']?.touched">
+          Veuillez sélectionner un Contrat.
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+<div class="input-group mb-3">
+  <label for="">muti-Filtre :</label>
+  <input type="text" class="form-control" [(ngModel)]="input" placeholder="filtrer suivant tout les colonnes" id="">
+  <span style="background-color: orange;color: white;" class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+</div>
+<div class="table-responsive tabb">
+  <table id="customers1">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Numéro de contrat</th>
+        <th>Date de signature</th>
+        <th>Montant total</th>
+        <th>Valide </th>
+        <th>Affaire </th>
+        <th>objet </th>
+        <th>Sous-traitant </th>
+        <th>Division </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of contrats| myGlobal:input; ;let i = index" (click)="selectContrat(c)">
+          <td >{{i+1}}</td>
+          <td ><span class="badge text-bg-primary fs">{{c?.contratNumber}}</span> </td>
+          <td >{{c?.signatureDate | date: 'yyyy-MM-dd HH:mm'}}</td>
+          <td >{{c.totalAmount}} </td>
+          <td >{{c.valid}} </td>
+          <td >{{c?.business?.codeAffaire}} </td>
+          <td >{{c?.business?.objet}} </td>
+          <td >{{c?.soustraitant?.name}} </td>
+          <td >{{c?.division?.divisionName}} </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+ 
+        
+  
+  
+  <button class="btn btn-primary" type="submit">Ajouter</button>
+  </form>
+  
+  
+  
+          
+
+
+      <div class=" card-header border-0">
+        <h3 class=" mb-0"><b>List des factures</b></h3>
+      </div>
+
+      <div class=" table-responsive" id="first-list">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th class="sort" data-sort="id" scope="col">#</th>
+              <th class="sort" data-sort="factureNumber" scope="col">Numéro de facture</th>
+              <th class="sort" data-sort="factureDate" scope="col">Date de facturation</th>
+              <th class="sort" data-sort="totalAmount" scope="col">Montant total</th>
+              <th class="sort" data-sort="typeContrat" scope="col">contrat Sous Traitance</th>
+              <th class="sort" data-sort="dateDebut_contrat" scope="col">Etape</th>
+              <th class="sort" data-sort="valid" scope="col">Valide</th>         
+              <th scope="col">Créé à</th>
+              <th scope="col">Créé par</th>
+              <th scope="col">Mis à jour à</th>
+              <th scope="col">Mis à jour par</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="list">
+            <tr *ngFor="let ele of factures; let i = index">
+              <th scope="row">{{ i+1 }}</th>
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.factureNumber }}</td>
+              <!-- Add input field for editing factureNumber -->
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="factureNumberInput" class="form-control" placeholder="...." type="text" [(ngModel)]="ele.factureNumber" />
+              </td>
+              <!-- Repeat the same pattern for other fields -->
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.factureDate| date:"dd/MM/YY" }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="factureNumberInput" class="form-control" placeholder="...." type="date" [(ngModel)]="ele.factureDate" />
+              </td>
+              <td class="budget" *ngIf="!ele.expanded">{{ ele.totalAmount }}</td>
+              <td class="budget" *ngIf="ele.expanded">
+                <input name="factureNumberInput" class="form-control" placeholder="...." type="number" [(ngModel)]="ele.totalAmount" />
+              </td>
+              <td class="budget" >{{ ele?.contratSousTraitance?.contratNumber }}</td>
+              <td class="budget" >{{ ele?.currentStep?.stepName }}</td>
+         
+
+              
+
+              
+              <td class="budget">{{ ele.valid?'validé':'en cours' }}</td>
+              <td class="budget">{{ ele.createdAt }}</td>
+              <td class="budget">{{ ele.createdBy }}</td>
+              <td class="budget">{{ ele.updatedAt }}</td>
+              <td class="budget">{{ ele.updatedBy }}</td>
+              <td class="text-right">
+                <div class="dropdown no-caret" dropdown>
+                  <a aria-controls="dropdown-basic" class="btn btn-sm btn-icon-only text-light dropdown-toggle" dropdownToggle href="javascript:void(0)" role="button">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" *dropdownMenu>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="ele.expanded = !ele.expanded">Modifier</a>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="verify(ele.contratID)">Supprimer</a>
+                    <a href="javascript:void(0)" class="dropdown-item" (click)="updateContrat(ele.contratID, i)">Sauvegarder</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+  
+      
+      </div>
+    </div>
+  
+    
+  </div>
+  <ngx-loading
+[show]="loading"
+[config]="{ backdropBorderRadius: '3px' }"
+
+></ngx-loading>

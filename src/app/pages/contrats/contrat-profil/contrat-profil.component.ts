@@ -1,3 +1,12 @@
+export class FileData {
+  filename?: string;
+  contentType?: string;
+  size?: number;
+}
+
+import { saveAs } from 'file-saver';
+
+
 import {
   Component,
   OnInit,
@@ -7,7 +16,7 @@ import {
 } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import swal from "sweetalert2";
-
+import WebViewer from '@pdftron/webviewer';
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interaction from "@fullcalendar/interaction";
@@ -22,6 +31,7 @@ import { StepFeildsService } from "src/app/services/step-feilds.service";
 import { EntryDateServiceService } from "src/app/services/entry-date-service.service";
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { FileService } from "src/app/services/file.service";
 @Component({
   selector: 'app-contrat-profil',
   templateUrl: './contrat-profil.component.html',
@@ -74,6 +84,7 @@ export class ContratProfilComponent implements OnInit{
   private routeSub: Subscription;
   paramValue: any;
   history: any = [  ];
+  pathImage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,7 +94,8 @@ export class ContratProfilComponent implements OnInit{
     private stepFields:StepFeildsService,
     private entryDateS:EntryDateServiceService,
     private modalService: BsModalService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fileService: FileService
   ) {
 
     this.url = this.service.url
@@ -428,6 +440,69 @@ export class ContratProfilComponent implements OnInit{
     window.open(this.url+"/" + imageUrl, '_blank');
   }
 
+  addElementsToPdfContainer(file:string){
+    // this.show = true;
+    const child1 = document.getElementById("viewer"); // Get the child div element
+    if(child1){
+      child1.remove();
+    }
+
+
+    const parent = document.getElementById("test");
+    const child = document.createElement("div");
+    child.id = "viewer";
+    child.classList.add("webviewer");
+    child.style.width = "100%"; // Add inline style to set width to 100%
+    child.style.height = "70vh"; // Add inline style to set height to 100vh
+    parent.appendChild(child);
+
+    WebViewer({
+      // path: ../../assets/lib,
+      path:`assets/lib`,
+      initialDoc: this.url+'/'+ file ,
+
+    },document.getElementById("viewer"))
+  }
+
+
+
+
+// downloadFile(fileName: string): void {
+//   this.service.downloadFile(fileName).subscribe(
+//     (response: Blob) => {
+//       console.log('Response:', response);
+//       // Rest of your code...
+//     },
+//     error => {
+//       console.error('Error downloading file:', error);
+//     })
+
+    downloadFile(fileData: any): void {
+      this.service
+              .download(fileData)
+              .subscribe(blob => saveAs(blob, fileData.filename));
+  }
+    
+  // this.service.downloadFile(fileName).subscribe(
+  //   (response) => {
+  //     console.error(response);
+  //     // // Create a blob URL from the response
+  //     // const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+  //     // const url = window.URL.createObjectURL(blob);
+
+  //     // // Create a link element and trigger the download
+  //     // const a = document.createElement('a');
+  //     // a.href = url;
+  //     // a.download = fileName;
+  //     // document.body.appendChild(a);
+  //     // a.click();
+  //     // window.URL.revokeObjectURL(url);
+  //   },
+  //   error => {
+  //     // Handle error
+  //     console.error('Error downloading file:', error);
+  //   }
+  // );
 
 
 
@@ -457,4 +532,5 @@ export class ContratProfilComponent implements OnInit{
 }
 
   
+
 

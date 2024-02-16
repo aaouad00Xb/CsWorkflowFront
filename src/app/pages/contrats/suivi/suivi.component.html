@@ -336,8 +336,15 @@
         <td >{{c.size}} ko</td>
         <td >{{c.createdBy}} </td>
         <td >{{c.createdAt}} </td>
-        <td style="background-color: #6db9ef60;"><button class="btn btn-primary py-2" (click)="openImageInNewWindow(c.path)"><i class="bi bi-eye-fill "></i></button></td>
-       
+        <td  style="background-color: #6db9ef60;">
+          
+          <!-- <button *ngIf="c.type !='application/pdf'" class="btn btn-primary py-2" (click)="openImageInNewWindow(c.path)"><i class="bi bi-eye-fill "></i></button> -->
+          
+          <button *ngIf="c.type =='application/pdf'" class="btn btn-secondary py-2" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+          (click)="addElementsToPdfContainer(c.path)"><img src="assets/img/book.png" width="30px" alt=""></button>
+
+          
+        <button   class="btn btn-secondary py-2" (click)="downloadFile(c.path)"><img src="assets/img/file.png" width="30px" alt=""></button></td>       
 
        
       </tr>
@@ -638,3 +645,29 @@
   </div>
 </div>
 
+
+
+<ngx-loading
+[show]="loading"
+[config]="{ backdropBorderRadius: '3px' }"
+
+></ngx-loading>
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="test">
+
+        <div id="viewer" class="webviewer">
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+        </div>

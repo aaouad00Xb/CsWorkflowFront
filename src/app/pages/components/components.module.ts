@@ -16,6 +16,8 @@ import { CardsComponent } from "./cards/cards.component";
 import { ComponentsComponent } from "./components/components.component";
 import { TypographyComponent } from "./typography/typography.component";
 import { MesNotificationsComponent } from './mes-notifications/mes-notifications.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,11 +32,13 @@ import { MesNotificationsComponent } from './mes-notifications/mes-notifications
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(ComponentsRoutes),
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
-    ClipboardModule
+    ClipboardModule,
+    MatSlideToggleModule
   ]
 })
 export class ComponentsModule {}

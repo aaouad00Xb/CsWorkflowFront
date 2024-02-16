@@ -1,0 +1,647 @@
+<div
+  class=" header header-dark bg-danger pb-6 content__title content__title--calendar"
+>
+  <div class=" container-fluid">
+    <div class=" header-body">
+      <div class=" row align-items-center py-4">
+        <div class=" col-lg-6">
+          <h6 class=" fullcalendar-title h2 text-white d-inline-block mb-0">
+            Mes Contrats
+          </h6>
+
+          <nav
+            aria-label="breadcrumb"
+            class=" d-none d-lg-inline-block ml-lg-4"
+          >
+            <ol class=" breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> <i class=" fas fa-home"> </i> </a>
+              </li>
+
+              <li class=" breadcrumb-item">
+                <a href="javascript:void(0)"> Contrat </a>
+              </li>
+
+              <li aria-current="page" class=" breadcrumb-item active">
+                Suivi Contrat
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" container-fluid mt--6">
+  <div class=" row">
+    <div class=" col">
+      <div class=" card card-calendar">
+        <div class=" card-header"><h5 class=" h3 mb-0">Suivi Contrat</h5></div>
+        <div class="card-body">
+          <fieldset class="custom-fieldset">
+            <legend>Filtrer</legend>
+        
+        <div>
+          <div class="ng-autocomplete">
+            <label>sélectionner une sous-traitance par numero</label>
+            <ng-autocomplete 
+              [data]="sousTraitances"
+              [searchKeyword]="keyword"
+              placeholder="tapez la sous-traitance"
+              (selected)='selectEvent($event)'
+              (inputChanged)='onChangeSearch($event)'
+              (inputFocused)='onFocused($event)'
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate">                                 
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.contratNumber"></a>
+            </ng-template>
+            
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+            </div>
+          
+        </div>
+            
+
+        </fieldset>
+        
+        <hr>
+        <div>
+          <h3>Temps écoulé dans cette étape </h3>
+          <p *ngIf="entryDate" class="leo">{{ formatTime(elapsedSeconds) }}</p>
+       
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <h3>Contrat dans cette étape depuis: <span class="badge bg-secondary">{{entryDate?.entryDate| date:"dd/MM/yy HH:mm"}} </span></h3>
+ 
+        </div>
+        
+       
+        
+        
+        <h3 for="">Sous-traitance </h3> 
+    
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="contratNumber">Numéro de contrat</label>
+                <input
+                  name="contratNumber"
+                  class="form-control"
+                  id="contratNumber"
+                  placeholder="Numéro de facture"
+                  type="text"
+                  [(ngModel)]="selectedSoustraitance.contratNumber"
+                  disabled
+                />
+                
+              </div>
+            </div>
+        
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" for="signatureDateInput">Date de signature</label>
+                <input
+                  name="signatureDate"
+                  class="form-control"
+                  id="signatureDateInput"
+                  placeholder="Date de signature"
+                  type="date"
+                  [(ngModel)]="selectedSoustraitance.signatureDate" [ngModel]="selectedSoustraitance.signatureDate | date:'y-MM-dd'"
+                  disabled
+                />
+                
+              </div>
+            </div>
+   
+        
+          <!-- Add similar blocks for other fields -->
+          <!-- 'totalAmount', 'typeContrat', 'dateDebut_contrat', 'dateFin_contrat', 'uploadedFiles', 'businessID', 'soustraitantID', 'divisionID' -->
+        <!-- ... (previous form content) ... -->
+
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="totalAmountInput">Montant total</label>
+      <input
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="number"
+        [(ngModel)]="selectedSoustraitance.totalAmount"
+
+        disabled
+      />
+      
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="typeContratInput">Type de contrat</label>
+      <!-- Here, you can use a select input, radio buttons, or other appropriate input types -->
+      <!-- Adjust ngModel, options, and validation as necessary -->
+      <!-- Example with a select input -->
+      <select
+        name="typeContrat"
+        class="form-control"
+        id="typeContratInput"
+        [(ngModel)]="selectedSoustraitance.typeContrat"
+        disabled
+      >
+        <option value="" disabled selected>Sélectionnez un type de contrat</option>
+        <option value="CONTRAT">CONTRAT</option>
+        <option value="Avenant">Avenant</option>
+        <!-- Add other options as needed -->
+      </select>
+    
+    </div>
+  </div>
+
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="form-control-label" for="dateDebut_contratInput">Date de début de contrat</label>
+      <input
+        name="dateDebut_contrat"
+        class="form-control"
+        id="dateDebut_contratInput"
+        placeholder="Date de début de contrat"
+        type="date"
+        [(ngModel)]="selectedSoustraitance.dateDebut_contrat" [ngModel]="selectedSoustraitance.dateDebut_contrat | date:'y-MM-dd'"
+        disabled
+      />
+      
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="dateFin_contratInput">Date de fin de contrat</label>
+      <input
+        name="dateFin_contrat"
+        class="form-control"
+        id="dateFin_contratInput"
+        placeholder="Date de fin de contrat"
+        type="date"
+        [(ngModel)]="selectedSoustraitance.dateFin_contrat" [ngModel]="selectedSoustraitance.dateFin_contrat | date:'y-MM-dd'"
+        disabled
+      />
+      
+    </div>
+  </div>
+
+
+
+ 
+
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="businessIDInput">Affaire</label>
+     
+      <input 
+      *ngIf="selectedSoustraitance.business"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.business.codeAffaire"
+
+        disabled
+      />
+      <input 
+      *ngIf="!selectedSoustraitance.business"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="code affaire"
+        type="text"
+
+        disabled
+      />
+
+      
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="soustraitantIDInput"> sous-traitant</label>
+      <input 
+      *ngIf="selectedSoustraitance.soustraitant"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.soustraitant.name"
+
+        disabled
+      />
+      <input
+      *ngIf="!selectedSoustraitance.soustraitant"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder=""
+        type="text"
+        disabled
+      />
+
+     
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-control-label" for="divisionIDInput">Division</label>
+     
+      <input 
+      *ngIf="selectedSoustraitance.division"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder="Montant total"
+        type="text"
+        [(ngModel)]="selectedSoustraitance.division.divisionName"
+
+        disabled
+      />
+      <input
+      *ngIf="!selectedSoustraitance.division"
+        name="totalAmount"
+        class="form-control"
+        id="totalAmountInput"
+        placeholder=""
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+</div>
+
+<h3>Documents</h3>
+
+
+
+  <div class="row m-2 p-1" style="background-color: #fff5c28e;">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-control-label" for="uploadedFilesInput">Ajouter des fichiers</label>
+        <input type="file" class="form-control"  multiple (change)="onFileSelected($event)" name="file" accept=".png, .jpg, .jpeg, .pdf , .docx" />
+    
+       
+      </div>
+      <button class="btn btn-primary" (click)="saveFiles()">sauvegarder</button>
+
+    </div>
+  </div>
+
+
+
+
+<table id="customers">
+  <thead>
+
+    <tr>
+      <th>#</th>
+      <th>Nom original</th>
+      <th>Type </th>
+      <th>Taille </th>
+      <th>Ajouté Par </th>
+      <th>Ajouté à </th>
+   
+      <th>action </th>
+     
+    </tr>
+
+  </thead>
+  <tbody>
+     
+      <tr *ngFor="let c of selectedSoustraitance?.uploadedFiles;let i = index">
+        <td >{{i+1}}</td>
+        <td >{{c.originalFilename}}</td>
+        <td >{{c.type}}</td>
+        <td >{{c.size}} ko</td>
+        <td >{{c.createdBy}} </td>
+        <td >{{c.createdAt}} </td>
+        <td style="background-color: #6db9ef60;"><button class="btn btn-primary py-2" (click)="openImageInNewWindow(c.path)"><i class="bi bi-eye-fill "></i></button></td>
+       
+
+       
+      </tr>
+
+  </tbody>
+</table>
+        
+      
+        
+    
+          <fieldset class="custom-fieldset mt-4">
+            <legend>Suivi d'un Contrat</legend>
+           
+           
+                <form  #ngForm="ngForm">
+                    <div class="row">
+                    
+                                  
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                            <label for="currentStep">Etape courrante:</label>
+                            <input type="text" class="form-control" id="currentStep" [value]="selectedSoustraitance?.currentStep?.stepName                    " name="currentStep" ngModel disabled >
+                          </div>
+                        </div>
+           
+                        
+                    </div>
+        
+                      </form>
+        
+        
+                      <div class="card mt-3">
+                        <!-- <div class="row" class="validation">
+                            <label for="">Validation </label> 
+                        </div> -->
+
+                       
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3" *ngFor="let stepField of stepFieldsList">
+                                            
+                                    <label>
+                                        <input type="checkbox"   [(ngModel)]="stepField.valid">
+                                        {{ stepField.fieldName }}
+                                      </label>
+                                    </div>
+                            </div>
+                        </div>
+        
+                        <div class="d-flex justify-content-center" style="background-color: rgba(128, 128, 128, 0.295);">
+                         
+                          <div class="p-2">
+                          <label for=""> Suite à donner :</label>
+                         
+                          </div>
+                          <div class="p-2" *ngIf="myuser?.role!='DG'">
+                          
+                            <select class="form-control" aria-label="Default select example" [disabled]="!stepFieldsList" [(ngModel)]="nextstepID">
+                              <option selected disabled>Open this select menu</option>
+                              <option  [value]="selectedSoustraitance?.currentStep?.nextStep?.stepID">{{selectedSoustraitance?.currentStep?.nextStep?.stepName}}</option>
+                              <option *ngIf="selectedSoustraitance?.currentStep?.previousStep" [value]="selectedSoustraitance?.currentStep?.previousStep?.stepID">retour pour modification </option>
+                             
+                            </select>
+                          </div>
+
+                          <div class="p-2" *ngIf="myuser?.role=='DG'">
+                            
+                            <select class="form-control" aria-label="Default select example" [disabled]="!stepFieldsList" [(ngModel)]="nextstepID">
+                              <option selected disabled>Open this select menu</option>
+                              <option *ngFor="let ele of steps" [value]="ele.stepID">{{ele.stepName}}</option>
+                             
+                            </select>
+                          </div>
+                           
+        
+                        
+                        </div>
+                       
+                    </div>
+                
+        <div *ngIf="myuser?.role!='DG'" class="d-flex flex-row mb-3 justify-content-center">
+            
+            <div class="  items-center justify-center m-3">
+                <a type="submit" class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold shadow text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                  <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                  <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span (click)="updateStepFields()"  class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">Sauvegarder l'état actuel</span>
+                </a>
+              </div>
+         <div class="  items-center justify-center m-3">
+                <a type="submit" class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold shadow text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                  <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                  <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <!-- <span (click)="onSubmit(ngForm)" type="submit" class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white"> pass to next Step</span> -->
+                  <span 
+                  
+                  data-target="#modal-default"
+                  data-toggle="modal"
+                  type="button"
+                  (click)="openDefaultModal(modalDefault)"
+                 
+                  type="submit" class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white fs-8">Changer l'état actuel</span>
+               
+               
+                </a>
+              </div>
+        </div>
+
+        
+        <div *ngIf="myuser?.role=='DG'" class="d-flex flex-row mb-3 justify-content-center">
+            
+            <div class="  items-center justify-center m-3">
+                <a type="submit" class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold shadow text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                  <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                  <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span (click)="validateDG()"  class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">Valider</span>
+                </a>
+              </div>
+         <div class="  items-center justify-center m-3">
+                <a type="submit" class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold shadow text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                  <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+                  <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <!-- <span (click)="onSubmit(ngForm)" type="submit" class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white"> pass to next Step</span> -->
+                  <span 
+                  
+                  data-target="#modal-default"
+                  data-toggle="modal"
+                  type="button"
+                  (click)="openDefaultModal(modalDefaultDG)"
+                 
+                  type="submit" class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white"> Renvoyer vers une étape anterieur </span>
+               
+               
+                </a>
+              </div>
+        </div>
+                     
+        
+        
+           
+          </fieldset>
+    
+        </div>      
+      </div>
+
+      
+
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- <button
+                class=" btn btn-block btn-primary mb-3"
+                data-target="#modal-default"
+                data-toggle="modal"
+                type="button"
+                (click)="openDefaultModal(modalDefault)"
+              >
+                Default
+              </button> -->
+              <ng-template #modalDefault>
+                <div class=" modal-header">
+                  <h6 class=" modal-title" id="modal-title-default">
+                    Laisse un commentaire a votre destinataire
+                  </h6>
+
+                  <button
+                    aria-label="Close"
+                    class=" close"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                    <span aria-hidden="true"> × </span>
+                  </button>
+                </div>
+
+                <div class=" modal-body">
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Commentaire" [(ngModel)]="commentaire" id="floatingTextarea"></textarea>
+                </div>
+
+                </div>
+
+                <div class=" modal-footer">
+                  <button class=" btn btn-primary"    (click)="defaultModal.hide();validate()" type="button">
+                    valider et envoyer 
+                  </button>
+
+                  <button
+                    class=" btn btn-link ml-auto"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                  annuler 
+                  </button>
+                </div>
+              </ng-template>
+              <ng-template #modalDefaultDG>
+                <div class=" modal-header">
+                  <h6 class=" modal-title" id="modal-title-default">
+                    Laisse un commentaire a votre destinataire
+                  </h6>
+
+                  <button
+                    aria-label="Close"
+                    class=" close"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                    <span aria-hidden="true"> × </span>
+                  </button>
+                </div>
+
+                <div class=" modal-body">
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Commentaire" [(ngModel)]="commentaire" id="floatingTextarea"></textarea>
+                </div>
+
+                </div>
+
+                <div class=" modal-footer">
+                  <button class=" btn btn-primary"    (click)="defaultModal.hide();validateNot()" type="button">
+                    Confirmer
+                  </button>
+
+                  <button
+                    class=" btn btn-link ml-auto"
+                    data-dismiss="modal"
+                    type="button"
+                    (click)="defaultModal.hide()"
+                  >
+                    Close
+                  </button>
+                </div>
+              </ng-template>
+
+<div  #buttonContainer  
+></div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ngx-loading
+[show]="loading"
+[config]="{ backdropBorderRadius: '3px' }"
+
+></ngx-loading>

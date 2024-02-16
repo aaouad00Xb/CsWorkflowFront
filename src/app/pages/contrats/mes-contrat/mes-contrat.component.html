@@ -114,7 +114,13 @@
                       <ng-template let-row="row" ngx-datatable-cell-template>
                         {{ row.signatureDate | date: 'yyyy-MM-dd HH:mm' }}
                       </ng-template>
-                    </ngx-datatable-column>  
+                    </ngx-datatable-column> 
+                    <ngx-datatable-column  [canAutoResize]="true" name="Dans cette etape depuis" prop="entryDate">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                       
+                        <span class="badge bg-warning text-white"> {{ row?.contratStepEntryDate?.entryDate | date: 'yyyy-MM-dd' }}</span> 
+                      </ng-template>
+                    </ngx-datatable-column>   
                     <ngx-datatable-column  [canAutoResize]="true" name="Montant total" prop="totalAmount"></ngx-datatable-column>
                     <!-- Add more columns as per your requirement -->
                     <ngx-datatable-column [canAutoResize]="true" name="Valide" prop="valid">
@@ -122,7 +128,10 @@
                         <span *ngIf="row.valid; else notValid" > <span class="badge bg-success">contrats validés</span> </span>
                         <ng-template #notValid> <span class="badge bg-warning text-white">En cours</span>            </ng-template>
                       </ng-template>
-                    </ngx-datatable-column>                    <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="business.codeAffaire"></ngx-datatable-column>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="business.codeAffaire"></ngx-datatable-column>
+                    <ngx-datatable-column  [canAutoResize]="true" name="objet" prop="business.objet"></ngx-datatable-column>
+
                     <ngx-datatable-column  [canAutoResize]="true" name="Sous-traitant" prop="soustraitant.name"></ngx-datatable-column>
                     <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="division.divisionName"></ngx-datatable-column>
                     <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">
@@ -226,6 +235,10 @@
                     {{ row.signatureDate | date: 'yyyy-MM-dd HH:mm' }}
                   </ng-template>
                 </ngx-datatable-column>  
+                <ngx-datatable-column [canAutoResize]="true" name="Etape" prop="currentStep.stepName"></ngx-datatable-column>
+
+                
+
                 <ngx-datatable-column  [canAutoResize]="true" name="Montant total" prop="totalAmount"></ngx-datatable-column>
                 <!-- Add more columns as per your requirement -->
                 <!-- <ngx-datatable-column  [canAutoResize]="true" name="Valide" prop="valid"></ngx-datatable-column> -->
@@ -236,6 +249,7 @@
                   </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="business.codeAffaire"></ngx-datatable-column>
+                <ngx-datatable-column  [canAutoResize]="true" name="objet" prop="business.objet"></ngx-datatable-column>
                 <ngx-datatable-column  [canAutoResize]="true" name="Sous-traitant" prop="soustraitant.name"></ngx-datatable-column>
                 <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="division.divisionName"></ngx-datatable-column>
                 <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">
@@ -344,6 +358,8 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column  [canAutoResize]="true" name="Affaire" prop="business.codeAffaire"></ngx-datatable-column>
+                  <ngx-datatable-column  [canAutoResize]="true" name="objet" prop="business.objet"></ngx-datatable-column>
+
                   <ngx-datatable-column  [canAutoResize]="true" name="Sous-traitant" prop="soustraitant.name"></ngx-datatable-column>
                   <ngx-datatable-column  [canAutoResize]="true" name="Division" prop="division.divisionName"></ngx-datatable-column>
                   <!-- <ngx-datatable-column  [canAutoResize]="true" name="Créé à" prop="createdAt">

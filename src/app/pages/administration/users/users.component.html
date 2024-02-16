@@ -241,7 +241,7 @@
                                 />
                               </div>
                             </div>
-                            <div class="col">
+                            <!-- <div class="col">
                               <div class="form-group">
                                 <label>Username</label>
                                 <input
@@ -253,7 +253,7 @@
                                   required
                                 />
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                           <div class="row">
                             <div class="col">
@@ -288,17 +288,14 @@
                                   <option Value="DG">DG</option>
                                   <option Value="DAF">DAF</option>
                                   <option value="CG">controle de gestion</option>
+                                  <option Value="COMPTABILITE">Comptabilité</option>
 
                                   <option Value="DP">DP</option>
-                                  <option Value="DIVISION_MANAGER">
-                                    DIVISION_MANAGER
-                                  </option>
-                                  <option Value="PROJECT_MANAGER">
-                                    PROJECT_MANAGER
-                                  </option>
-                                  <option Value="Simple_Employee">
-                                    Simple_Employee
-                                  </option>
+                                  <option Value="ASSISTANTE_POLE">Assistante du pole</option>
+                                  <option Value="DIVISION_MANAGER">DIVISION_MANAGER</option>
+                                  <option Value="PROJECT_MANAGER"> PROJECT_MANAGER </option>
+                                  <option Value="Simple_Employee">Simple_Employee</option>
+                                  
                                   <option Value="ADMIN">ADMIN</option>
                                   <!-- <option Value="COMPTABILITE">COMPTABILITE</option> -->
                                 </select>
@@ -308,7 +305,7 @@
         
                   
                             
-                            <div class="col-sm-3" *ngIf="role=='DP' || role=='DIVISION_MANAGER' || role=='Simple_Employee' || role == 'PROJECT_MANAGER' ">
+                            <div class="col-sm-3" *ngIf="role=='DP' || role=='DIVISION_MANAGER' || role=='Simple_Employee' || role == 'PROJECT_MANAGER' || role == 'ASSISTANTE_POLE' ">
                               <div class="form-group">
                                 <label for="poles">Select pole</label>
                                 <select

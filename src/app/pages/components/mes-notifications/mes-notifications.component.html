@@ -32,17 +32,24 @@
   <div class=" container-fluid mt--6">
     <div class=" card mb-4">
       <div class=" card-header"><h3 class=" mb-0">Notifications</h3></div>
- 
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+          <mat-slide-toggle [(ngModel)]="forMe" (change)="applyFilters()">Pour Action</mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="hasFacture" (change)="applyFilters()">Factures</mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="hasContrat" (change)="applyFilters()">Contrat</mat-slide-toggle>
+        </div>
+        
+      </div>
 <div class="card-body">
   <div id="container" >
         
     <!-- ========== START COPYING HERE ========== -->
     
-    <div class="notif" (click)="onRowAction(ele.contratID)" *ngFor="let ele of notifications" [ngClass]="notificationContent(ele.type) ">
+    <div class="notif" (click)="onRowAction(ele)" *ngFor="let ele of filteredNotifications" [ngClass]="notificationContent(ele.type) ">
       <div class="row">
           <div class="col-sm-1">
-              <img [src]="notificationContentimage(ele.type)" width="30" alt="">
-              <img [src]="toMe(ele.forMe)" width="20"class="ml-3" alt="">
+              <img [src]="notificationContentimage(ele.type)" width="20" alt="">
+              <img [src]="toMe(ele.forMe)" width="40"class="ml-3" alt="">
 
           </div>
           <div class="col-sm-11">
