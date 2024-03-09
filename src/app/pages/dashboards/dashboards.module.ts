@@ -20,8 +20,10 @@ import { BrowserAnimationsModule }
 import { BrowserModule } from "@angular/platform-browser";
 import { NgxEchartsModule } from "ngx-echarts";
 import { GaugeComponent } from "src/app/charts/gauge/gauge.component";
+import { EvoChartComponent } from "src/app/charts/evo-chart/evo-chart.component";
 @NgModule({
-  declarations: [DashboardComponent, AlternativeComponent,BarComponent,EvolutionComponent ,   GaugeComponent,
+  declarations: [DashboardComponent,     EvoChartComponent,
+    AlternativeComponent,BarComponent,EvolutionComponent ,   GaugeComponent,
   ],
   imports: [
     CommonModule,

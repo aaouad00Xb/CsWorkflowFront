@@ -26,6 +26,7 @@ import { Evolution2Component } from './charts/evolution2/evolution2.component';
 import { PieComponent } from './charts/pie/pie.component';
 import { Pie2Component } from './charts/pie2/pie2.component';
 import { MyGlobalPipe } from './my-global.pipe';
+import { EvoChartComponent } from './charts/evo-chart/evo-chart.component';
 
 @NgModule({
   declarations: [

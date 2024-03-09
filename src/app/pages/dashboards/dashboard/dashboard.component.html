@@ -221,14 +221,11 @@
 
         <div class=" card-body">
           
-          <app-bar label="Données Global par Division" [labels]="dashboard?.dashboardBarDto?.divisionNames" [data1]="dashboard?.dashboardBarDto?.contractCounts" [data2]="dashboard?.dashboardBarDto?.restartedContractsCount" [data3]="dashboard?.dashboardBarDto?.validatedContractsCount"></app-bar>
+          <app-evo-chart [data1]="dashboard.populateEvolution" [dates]="dashboard.dates"></app-evo-chart>
         
         </div>
       </div>
     </div>
-
-  
   </div>
-
-
+  
 </div>

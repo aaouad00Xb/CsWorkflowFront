@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { DownloadService } from "src/app/services/download.service";
 import { imagePath } from "src/app/services/envirement";
 
 var misc: any = {
@@ -217,7 +218,7 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
   path = imagePath
-  constructor(private router: Router) {}
+  constructor(private router: Router,private downloadService: DownloadService) {}
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -257,4 +258,15 @@ export class SidebarComponent implements OnInit {
       misc.sidebar_mini_active = true;
     }
   }
+
+
+
+  download(): void {
+    const fileName = 'manuel.pdf'; // Assuming the file is named document.pdf
+    this.downloadService.downloadAsset(fileName);
+  }
+
+
+
+
 }
